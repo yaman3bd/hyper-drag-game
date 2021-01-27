@@ -30,11 +30,11 @@ public class CameraFollow : MonoBehaviour
 	[SerializeField] TMP_Text speedometer;
 
 
-	PlayerCarController vehicle;
+	CarController vehicle;
 
 	void Start()
 	{
- 		vehicle = target.GetComponent<PlayerCarController>();
+ 		vehicle = target.GetComponent<CarController>();
 		if (vehicle != null)
 		{
 			vehicle.Handbrake = false;
