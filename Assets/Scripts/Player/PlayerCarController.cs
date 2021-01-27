@@ -16,13 +16,13 @@ public class PlayerCarController : MonoBehaviour
 
     private void Awake()
     {
-        PCarController.GetInitialXPos(0);
-
         shiftsScript = GetComponent<ShiftsScript>();
+
     }
 
     void Start()
     {
+        PCarController.GetInitialXPos(0);
 
         shiftsScript.UpdateEpicShiftValues();
 

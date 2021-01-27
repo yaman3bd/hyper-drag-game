@@ -7,6 +7,7 @@ using System;
 using GameManagment;
 public class GarageUIScript : MonoBehaviour
 {
+    public GameObject MainUI;
     [Header("Cars")]
     public GarageCarsLoader CarsLoader;
     public Vector3 CarPosition;
@@ -30,6 +31,7 @@ public class GarageUIScript : MonoBehaviour
     public Slider GearsSliders;
 
     public int CarIndex;
+    public string SelectedCarID;
     // Start is called before the first frame update
     void Start()
     {
@@ -87,6 +89,7 @@ public class GarageUIScript : MonoBehaviour
 
     }
     private void UpdateGarageUIandGarage(int carIndex)
+
     {
        
         var carData = GameManager.Instance.CarsData.GetCarByIndex(carIndex);
@@ -94,7 +97,10 @@ public class GarageUIScript : MonoBehaviour
         UpdateUI(carData);
         
         UpdateCar(carData);
-       
+
+        UpdateCarID(carData);
+
+
     }
     private void PlaceCar(GameObject car, Vector3 postion, Vector3 rotation, Transform parent)
     {
@@ -104,10 +110,17 @@ public class GarageUIScript : MonoBehaviour
         car.transform.SetParent(parent);
    
     }
+    private void UpdateCarID(CarDataScriptableObject carData)
+    {
+        SelectedCarID = carData.ID;
+        GameManager.Instance.SelectedCarID = SelectedCarID;
+
+    }
 
     private void BuyCarButton_OnClick()
     {
-
+        this.gameObject.SetActive(false);
+        MainUI.SetActive(true);
     }
     // Update is called once per frame
     void Update()

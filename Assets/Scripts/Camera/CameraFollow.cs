@@ -34,6 +34,7 @@ public class CameraFollow : MonoBehaviour
 
 	void Start()
 	{
+		target = GameObject.FindObjectOfType<PlayerCarController>().transform;
  		vehicle = target.GetComponent<CarController>();
 		if (vehicle != null)
 		{

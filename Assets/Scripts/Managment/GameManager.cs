@@ -8,7 +8,7 @@ namespace GameManagment
     {
         public CarsScriptableObject CarsData;
         public CarsIDsScriptableObject CarsIds;
-
+        public string SelectedCarID;
         // Start is called before the first frame update
         void Start()
         {

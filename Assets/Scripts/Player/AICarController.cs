@@ -12,10 +12,11 @@ public class AICarController : MonoBehaviour
     public float d;
     private void Awake()
     {
-        PCarController.GetInitialXPos(-10);
+
         //get the random value
         shiftsScript = GetComponent<ShiftsScript>();
     }
+   
     IEnumerator MyUpdate()
     {
         while (true)
@@ -33,7 +34,9 @@ public class AICarController : MonoBehaviour
     public float timer;
     void Start()
     {
-
+        PCarController.GetInitialXPos(-10);
+        min = max = 0.1f;
+        d = 0.8f;
         shiftsScript.UpdateEpicShiftValues();
         timer = Random.Range(shiftsScript.EpicShiftTime - min, shiftsScript.EpicShiftTime + max);
         StartCoroutine(MyUpdate());
