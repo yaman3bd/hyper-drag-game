@@ -70,9 +70,7 @@ public class CarController : MonoBehaviour
 
     private void Awake()
     {
-        InitialXPos = transform.position.x;
-
- 
+       
         rb = GetComponent<Rigidbody>();
     }
 
@@ -104,6 +102,10 @@ public class CarController : MonoBehaviour
         UpdateCurrentDiffGearing(currentDiffGearing);
         AddForceIfBetween(0.5f, 1.0f);
 
+    }
+    public void GetInitialXPos(float val)
+    {
+        InitialXPos = val;
     }
     public void UpdateAcceleration(float val)
     {

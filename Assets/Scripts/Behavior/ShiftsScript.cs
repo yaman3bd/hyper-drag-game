@@ -29,30 +29,61 @@ public class ShiftsScript : MonoBehaviour
     [Header("Threshold")]
     public float EpicShiftThreshold;
     public float TooCloseShiftThreshold;
-   
-    [Header("UI")]
-    public Slider ShiftSlider;
-    public Gradient2 ShiftSliderBackground;
-    public TextAnimation ShiftStateText;
- 
+
+
+    public Slider ShiftSlider
+    {
+        get
+        {
+            return InGameUIManagerScript.Instance.ShiftSlider;
+        }
+        set
+        {
+            InGameUIManagerScript.Instance.ShiftSlider = value;
+        }
+    }
+    public Gradient2 ShiftSliderBackground
+    {
+        get
+        {
+            return InGameUIManagerScript.Instance.ShiftSliderBackground;
+        }
+        set
+        {
+            InGameUIManagerScript.Instance.ShiftSliderBackground = value;
+        }
+    }
+
+    public TextAnimation ShiftStateText
+    {
+        get
+        {
+            return InGameUIManagerScript.Instance.ShiftStateText;
+        }
+        set
+        {
+            InGameUIManagerScript.Instance.ShiftStateText = value;
+        }
+    }
+
     [Header("Shift Slider Values")]
     public float ShiftSliderSpeed;
     public float MaxTime;
     public float MinTime;
     public float TimeThreshold;
- 
+
     private bool IsSliderIncrease;
-    private bool IsSliderDecrease;   
+    private bool IsSliderDecrease;
     private float CurrentSpeed;
 
-  
+
     private void SpeedUp()
     {
         if (MaxTime >= MinTime)
             MaxTime -= TimeThreshold * Time.deltaTime;
     }
     public void HandleShiftSlider()
-    {        
+    {
         ShiftSlider.value = CurrentSpeed / MaxTime;
 
         if (ShiftSlider.value <= ShiftSlider.minValue)
@@ -108,7 +139,7 @@ public class ShiftsScript : MonoBehaviour
     }
 
     #region Shifts
-  
+
     public ShiftState GetShiftFromTime(float shiftTime)
     {
         //Epic
@@ -135,7 +166,7 @@ public class ShiftsScript : MonoBehaviour
         return ShiftState.None;
 
     }
-   
+
     private void OnTooLateShift()
     {
         ShiftStateText.DoText("Too Late");
@@ -216,22 +247,22 @@ public class ShiftsScript : MonoBehaviour
                 break;
         }
     }
-   
+
     public float GetShiftTime()
     {
         return ShiftSlider.value;
     }
-   
+
     public float GetMinShiftTime()
     {
         return ShiftSlider.minValue;
     }
-   
+
     public float GetMaxShiftTime()
     {
         return ShiftSlider.maxValue;
     }
-   
+
     #endregion
 
     public void ResetShiftSliderTime()

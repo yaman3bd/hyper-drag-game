@@ -12,6 +12,7 @@ public class AICarController : MonoBehaviour
     public float d;
     private void Awake()
     {
+        PCarController.GetInitialXPos(-10);
         //get the random value
         shiftsScript = GetComponent<ShiftsScript>();
     }
