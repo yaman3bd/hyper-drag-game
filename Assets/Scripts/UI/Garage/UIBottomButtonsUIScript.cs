@@ -21,6 +21,8 @@ public class UIBottomButtonsUIScript : MonoBehaviour
  
     [Space]
     public ScrollRect MenusScroll;
+    [Space]
+    public Canvas Parent;
 
     [Header("Menu UI Items")]  
     public SettingsUIScript SettingsUI;
@@ -66,15 +68,33 @@ public class UIBottomButtonsUIScript : MonoBehaviour
     
         MenusScroll.DOHorizontalNormalizedPos(pos, UIItemsScrollDuration);
     }
+    public RectTransform rect;
+    public RectTransform center;
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        SettingsUIButtonRect = SettingsUIButton.GetComponent<RectTransform>();
-        GarageUIButtonRect = GarageUIButton.GetComponent<RectTransform>();
-        MainUIButtonRect = MainUIButton.GetComponent<RectTransform>();
-        StoreUIButtonRect = StoreUIButton.GetComponent<RectTransform>();
-        
+     
     }
 #endif
+    private void PlaceUI()
+    {
+        int multi = 3;
 
+        var a = Parent.GetComponent<RectTransform>().rect.width;
+        SettingsUI.GetComponent<RectTransform>().SetLeft(a * -multi);
+
+        SettingsUI.GetComponent<RectTransform>().SetRight(a * multi);
+        multi--;
+        GarageUI.GetComponent<RectTransform>().SetLeft(a * -multi);
+        GarageUI.GetComponent<RectTransform>().SetRight(a * multi);
+
+        multi--;
+        MainMenuUI.GetComponent<RectTransform>().SetLeft(a * -multi);
+        MainMenuUI.GetComponent<RectTransform>().SetRight(a * multi);
+        multi--;
+        StoreUI.GetComponent<RectTransform>().SetLeft(a * -multi);
+        StoreUI.GetComponent<RectTransform>().SetRight(a * multi);
+
+
+    }
 }
