@@ -5,9 +5,10 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using GameManagment;
-public class GarageUIScript : MonoBehaviour
+public class GarageUIScript : GlobalUIScript
 {
     public GameObject MainUI;
+    public RectTransform UIRect;
     [Header("Cars")]
     public GarageCarsLoader CarsLoader;
     public Vector3 CarPosition;
@@ -37,12 +38,18 @@ public class GarageUIScript : MonoBehaviour
     {
         NextCarButton.onClick.AddListener(NextCarButton_OnClick);
         PrevCarButton.onClick.AddListener(PrevCarButton_OnClick);
-        BuyCarButton.onClick.AddListener(BuyCarButton_OnClick);
-
+        BuyCarButton.onClick.AddListener(BuyCarButton_OnClick);      
+    }
+    public override void Show()
+    {
+        base.Show();
         CarIndex = -1;
 
     }
-
+    public override void Hide()
+    {
+        base.Hide();
+    }
     GarageCarData activeCar;
     private void PrevCarButton_OnClick()
     {

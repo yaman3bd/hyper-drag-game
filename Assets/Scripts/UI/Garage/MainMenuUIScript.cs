@@ -4,37 +4,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-public class MainMenuUIScript : MonoBehaviour
+using DG.Tweening;
+public class MainMenuUIScript : GlobalUIScript
 {
-    public Button PlayButton;
-    public Button GarageButton;
+    public RectTransform UIRect;
 
-    public GameObject GarageUI;
-    public GameObject MainMenuUI;
+    public Button PlayButton;
 
     // Start is called before the first frame update
     void Start()
     {
         PlayButton.onClick.AddListener(PlayButton_OnClick);
-        GarageButton.onClick.AddListener(GarageButton_OnClick);
 
     }
-
-    private void GarageButton_OnClick()
+    public override void Show()
     {
-        GarageUI.SetActive(true);
-        MainMenuUI.SetActive(false);
+        base.Show();
+    }
+    public override void Hide()
+    {
+        base.Hide();
     }
 
     private void PlayButton_OnClick()
     {
         SceneManager.LoadScene("Level_1");
-      
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
