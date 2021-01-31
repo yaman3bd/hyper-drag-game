@@ -9,6 +9,8 @@ public class GarageUIScript : GlobalUIScript
 {
     public GameObject MainUI;
     public RectTransform UIRect;
+    public LayoutElement LayoutElement;
+
     [Header("Cars")]
     public GarageCarsLoader CarsLoader;
     public Vector3 CarPosition;

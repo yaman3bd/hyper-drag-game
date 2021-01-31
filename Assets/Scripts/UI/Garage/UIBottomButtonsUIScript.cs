@@ -18,15 +18,15 @@ public class UIBottomButtonsUIScript : MonoBehaviour
     public RectTransform GarageUIButtonRect;
     public RectTransform MainUIButtonRect;
     public RectTransform StoreUIButtonRect;
- 
+
     [Space]
     public ScrollRect MenusScroll;
     [Space]
-    public Canvas Parent;
+    public RectTransform Parent;
 
-    [Header("Menu UI Items")]  
+    [Header("Menu UI Items")]
     public SettingsUIScript SettingsUI;
-    public GarageUIScript GarageUI; 
+    public GarageUIScript GarageUI;
     public MainMenuUIScript MainMenuUI;
     public StoreUIScript StoreUI;
 
@@ -39,8 +39,15 @@ public class UIBottomButtonsUIScript : MonoBehaviour
         MainUIButton.onClick.AddListener(MainUIButton_OnClick);
         StoreUIButton.onClick.AddListener(StoreUIButton_OnClick);
 
+        StartCoroutine(Test());
     }
+    IEnumerator Test()
+    {
+        SetWidthToMainUILayoutElement();
 
+        yield return new WaitForEndOfFrame();
+        MainUIButton_OnClick();
+    }
     private void SettingsUIButton_OnClick()
     {
         UIMenuItemAnimation(SettingsUI.UIRect, SettingsUIButtonRect);
@@ -55,17 +62,17 @@ public class UIBottomButtonsUIScript : MonoBehaviour
     {
         UIMenuItemAnimation(MainMenuUI.UIRect, MainUIButtonRect);
     }
-    
+
     private void StoreUIButton_OnClick()
     {
-        UIMenuItemAnimation(StoreUI.UIRect,StoreUIButtonRect);
+        UIMenuItemAnimation(StoreUI.UIRect, StoreUIButtonRect);
     }
 
-    private void UIMenuItemAnimation(RectTransform target,RectTransform buttonTarget)
+    private void UIMenuItemAnimation(RectTransform target, RectTransform buttonTarget)
     {
         var pos = MenusScroll.ScrollToCenter(target, RectTransform.Axis.Horizontal);
-        
-    
+
+
         MenusScroll.DOHorizontalNormalizedPos(pos, UIItemsScrollDuration);
     }
     public RectTransform rect;
@@ -73,28 +80,29 @@ public class UIBottomButtonsUIScript : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-     
+        SetWidthToMainUILayoutElement();
+        var pos = MenusScroll.ScrollToCenter(GarageUI.UIRect, RectTransform.Axis.Horizontal);
+        MenusScroll.horizontalNormalizedPosition = pos;
     }
+
 #endif
-    private void PlaceUI()
+
+    private void SetWidthToMainUILayoutElement()
     {
-        int multi = 3;
-
-        var a = Parent.GetComponent<RectTransform>().rect.width;
-        SettingsUI.GetComponent<RectTransform>().SetLeft(a * -multi);
-
-        SettingsUI.GetComponent<RectTransform>().SetRight(a * multi);
-        multi--;
-        GarageUI.GetComponent<RectTransform>().SetLeft(a * -multi);
-        GarageUI.GetComponent<RectTransform>().SetRight(a * multi);
-
-        multi--;
-        MainMenuUI.GetComponent<RectTransform>().SetLeft(a * -multi);
-        MainMenuUI.GetComponent<RectTransform>().SetRight(a * multi);
-        multi--;
-        StoreUI.GetComponent<RectTransform>().SetLeft(a * -multi);
-        StoreUI.GetComponent<RectTransform>().SetRight(a * multi);
-
-
+        var width = Parent.rect.width;
+       /* var items = MenusScroll.content.childCount;
+        for (int i = 0; i < items; i++)
+        {
+            var item = MenusScroll.content.GetChild(i);
+            if (item.gameObject.activeSelf)
+            {
+                item.GetComponent<LayoutElement>().preferredHeight = width;
+            }
+        }*/
+        
+        SettingsUI.LayoutElement.preferredWidth = width;
+         GarageUI.LayoutElement.preferredWidth = width;
+         MainMenuUI.LayoutElement.preferredWidth = width;
+         StoreUI.LayoutElement.preferredWidth = width;
     }
 }

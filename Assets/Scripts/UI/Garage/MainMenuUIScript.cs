@@ -8,6 +8,7 @@ using DG.Tweening;
 public class MainMenuUIScript : GlobalUIScript
 {
     public RectTransform UIRect;
+    public LayoutElement LayoutElement;
 
     public Button PlayButton;
 
