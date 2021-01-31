@@ -20,12 +20,8 @@ public class ShiftsScript : MonoBehaviour
 
     [Header("Shifts")]
     public List<ShiftState> ComboShifts;
-    [Header("Epic Shift Values")]
-    public float EpicShiftTime;
-    [Range(0.0f, 1.0f)]
-    public float EpicShiftMinTime;
-    [Range(0.0f, 1.0f)]
-    public float EpicShiftMaxTime;
+   
+    
     [Header("Threshold")]
     public float EpicShiftThreshold;
     public float TooCloseShiftThreshold;
@@ -74,9 +70,16 @@ public class ShiftsScript : MonoBehaviour
 
     private bool IsSliderIncrease;
     private bool IsSliderDecrease;
+
     private float CurrentSpeed;
+    private float EpicShiftTime;
 
+    private EpicShiftValuesScriptableObject EpicShiftsValues;
 
+    private void Start()
+    {
+        EpicShiftsValues = GameManagment.GameManager.Instance.PlayerEpicShiftsValues;
+    }
     private void SpeedUp()
     {
         if (MaxTime >= MinTime)
@@ -126,7 +129,8 @@ public class ShiftsScript : MonoBehaviour
         gck[2].color = col3;
         gck[3].color = col2;
 
-        EpicShiftTime = UnityEngine.Random.Range(EpicShiftMinTime, EpicShiftMaxTime);
+        EpicShiftsValues.UpdateEpicShiftTimeValue();
+        EpicShiftTime = EpicShiftsValues.GetEpicShiftTimeValue();
 
         gck[0].time = 0;
         gck[1].time = 0.5f;

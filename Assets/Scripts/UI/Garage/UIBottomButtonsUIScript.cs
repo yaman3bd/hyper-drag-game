@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class UIBottomButtonsUIScript : MonoBehaviour
 {
+    public RectTransform TestT;
     [Header("Animation")]
     public float UIItemsScrollDuration;
     [Space]
@@ -46,7 +47,7 @@ public class UIBottomButtonsUIScript : MonoBehaviour
         SetWidthToMainUILayoutElement();
 
         yield return new WaitForEndOfFrame();
-        MainUIButton_OnClick();
+        GarageUIButton_OnClick();
     }
     private void SettingsUIButton_OnClick()
     {
@@ -81,7 +82,7 @@ public class UIBottomButtonsUIScript : MonoBehaviour
     private void OnValidate()
     {
         SetWidthToMainUILayoutElement();
-        var pos = MenusScroll.ScrollToCenter(GarageUI.UIRect, RectTransform.Axis.Horizontal);
+        var pos = MenusScroll.ScrollToCenter(TestT, RectTransform.Axis.Horizontal);
         MenusScroll.horizontalNormalizedPosition = pos;
     }
 

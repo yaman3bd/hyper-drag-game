@@ -8,6 +8,9 @@ namespace GameManagment
     {
         public CarsScriptableObject CarsData;
         public CarsIDsScriptableObject CarsIds;
+        public EpicShiftValuesScriptableObject PlayerEpicShiftsValues;
+        public EpicShiftValuesScriptableObject AIEpicShiftsValues;
+
         public string SelectedCarID;
         // Start is called before the first frame update
         void Start()

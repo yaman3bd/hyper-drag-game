@@ -10,12 +10,12 @@ public class MainMenuUIScript : GlobalUIScript
     public RectTransform UIRect;
     public LayoutElement LayoutElement;
 
-    public Button PlayButton;
+    public Button RaceButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayButton.onClick.AddListener(PlayButton_OnClick);
+        RaceButton.onClick.AddListener(PlayButton_OnClick);
 
     }
     public override void Show()
