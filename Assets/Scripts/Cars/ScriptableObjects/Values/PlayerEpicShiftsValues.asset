@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0037fdc20da8ef4d92afb157ddae2ab, type: 3}
   m_Name: PlayerEpicShiftsValues
   m_EditorClassIdentifier: 
-  EpicShiftTime: 0.6575904
-  EpicShiftMinTime: 0
-  EpicShiftMaxTime: 0
+  EpicShiftTime: 0
+  EpicShiftMinTime: 0.5
+  EpicShiftMaxTime: 1
