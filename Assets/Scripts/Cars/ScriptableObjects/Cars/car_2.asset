@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978782be9ddb0f4a81c40f294d97460, type: 3}
   m_Name: car_2
   m_EditorClassIdentifier: 
-  Name: new car 2
-  ID: car_2
+  Name: Halley
+  ID: c_1
   Price: 500
+  Rank: 0

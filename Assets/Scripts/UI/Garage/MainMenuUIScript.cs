@@ -29,7 +29,7 @@ public class MainMenuUIScript : GlobalUIScript
 
     private void PlayButton_OnClick()
     {
-        SceneManager.LoadScene("Level_1");
+        SceneManager.LoadScene("InGame");
 
     }
 }

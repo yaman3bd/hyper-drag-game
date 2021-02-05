@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using UnityEditor;
 
 public static class UtilitiesScript
 {
@@ -120,5 +122,37 @@ public static class UtilitiesScript
     public static void SetBottom(this RectTransform rt, float bottom)
     {
         rt.offsetMin = new Vector2(rt.offsetMin.x, bottom);
+    }
+    public static List<T> LoadAllPrefabsOfType<T>(string path) where T :UnityEngine.Object
+    {
+        if (path != "")
+        {
+            if (path.EndsWith("/"))
+            {
+                path = path.TrimEnd('/');
+            }
+        }
+
+        DirectoryInfo dirInfo = new DirectoryInfo(path);
+        FileInfo[] fileInf = dirInfo.GetFiles("*.prefab");
+
+        //loop through directory loading the game object and checking if it has the component you want
+        List<T> prefabComponents = new List<T>();
+        foreach (FileInfo fileInfo in fileInf)
+        {
+            string fullPath = fileInfo.FullName.Replace(@"\", "/");
+            string assetPath = "Assets" + fullPath.Replace(Application.dataPath, "");
+            GameObject prefab = AssetDatabase.LoadAssetAtPath(assetPath, typeof(GameObject)) as GameObject;
+
+            if (prefab != null)
+            {
+                T hasT = prefab.GetComponent<T>();
+                if (hasT != null)
+                {
+                    prefabComponents.Add(hasT);
+                }
+            }
+        }
+        return prefabComponents;
     }
 }

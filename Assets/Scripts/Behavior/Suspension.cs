@@ -34,7 +34,8 @@ namespace VehicleBehaviour {
             lastUpdate = Time.realtimeSinceStartup;
 
             _wheelCollider = GetComponent<WheelCollider>();
-            wheelModel = transform.GetChild(0).gameObject;
+            if (wheelModel == null)
+                wheelModel = transform.GetChild(0).gameObject;
         }
         
         void FixedUpdate()

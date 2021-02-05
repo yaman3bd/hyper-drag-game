@@ -387,7 +387,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 100
-  field of view: 20
+  field of view: 27
   orthographic: 0
   orthographic size: 23.29
   m_Depth: -1
@@ -683,7 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c4ac2c195616d449fd6c567ebe05fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CarsResourcesPath: 
+  CarsResourcesPath: GarageCars/
 --- !u!4 &1537352819
 Transform:
   m_ObjectHideFlags: 0
@@ -986,7 +986,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -294.01675, y: 0}
+  m_AnchoredPosition: {x: -293.75534, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2311854490392662759
@@ -1230,8 +1230,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2311854491205333345}
   m_HandleRect: {fileID: 2311854491205333347}
   m_Direction: 0
-  m_Value: 1.0000004
-  m_Size: 0.50000006
+  m_Value: 2.9486413
+  m_Size: 0.83055556
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2651,7 +2651,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 588.03326
+  m_PreferredWidth: 354
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
@@ -3346,7 +3346,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 588.03326
+  m_PreferredWidth: 354
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
@@ -4524,7 +4524,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 588.03326
+  m_PreferredWidth: 354
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: 1
@@ -4916,7 +4916,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 58.5
+  m_fontSize: 46.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5432,7 +5432,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 588.03326
+  m_PreferredWidth: 354
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
@@ -5718,6 +5718,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa174c2996c9ff4794082dde24e6ec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cars:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   TestT: {fileID: 2311854491441434187}
   UIItemsScrollDuration: 0.2
   SettingsUIButton: {fileID: 2311854490629205131}
@@ -5734,8 +5739,7 @@ MonoBehaviour:
   GarageUI: {fileID: 2311854492301645016}
   MainMenuUI: {fileID: 2311854491966797173}
   StoreUI: {fileID: 2311854491212358753}
-  rect: {fileID: 0}
-  center: {fileID: 0}
+  test: 1
 --- !u!114 &2311854492190178211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6320,8 +6324,8 @@ MonoBehaviour:
   UIRect: {fileID: 3448054028787866481}
   LayoutElement: {fileID: 2311854491070130313}
   CarsLoader: {fileID: 1537352818}
-  CarPosition: {x: -0.4153239, y: 1.356844, z: 2.052161}
-  CarRotation: {x: 0, y: 0, z: 0}
+  CarPosition: {x: -1.8, y: 0.5, z: 0}
+  CarRotation: {x: 0, y: 60, z: 0}
   CarsParent: {fileID: 48806722}
   CarNameText: {fileID: 2311854491861326303}
   CarRankText: {fileID: 2311854491953740142}
