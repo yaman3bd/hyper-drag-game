@@ -8,7 +8,7 @@ using UnityEngine.UI.Extensions;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
-
+ 
     [Header("Push Force")]
     public ForceMode ForceMode;
     public float ForcePower;
@@ -86,7 +86,7 @@ public class CarController : MonoBehaviour
 
  
     }
-
+ 
     void Update()
     {
 
@@ -121,38 +121,54 @@ public class CarController : MonoBehaviour
 
         // Mesure current speed
         speed = transform.InverseTransformDirection(rb.velocity).z * 3.6f;
-
-
-        foreach (WheelCollider wheel in wheels)
+       
+        if (handbrake)
         {
-            wheel.motorTorque = 200f;
-            wheel.brakeTorque = 0;
+            foreach (WheelCollider wheel in wheels)
+            {
+                // Don't zero out this value or the wheel completly lock up
+                wheel.motorTorque = 0.0001f;
+                wheel.brakeTorque = BrakeForce;
+            }
         }
-
-        if (Acceleration.IsBetween(0.0f, 0.3f))
+        else
         {
 
             foreach (WheelCollider wheel in wheels)
             {
-                // Don't zero out this value or the wheel completely lock up
-                wheel.motorTorque = 0.01f;
-                wheel.brakeTorque = GetBrakeForce();
+                wheel.motorTorque = 200f;
+                wheel.brakeTorque = 0;
             }
-        }
-        else if (Mathf.Abs(speed) < 4)
-        {
 
-            foreach (WheelCollider wheel in wheels)
+            if (Acceleration.IsBetween(0.0f, 0.3f))
             {
-                wheel.motorTorque = GetWheelMotorTorque();
+
+                foreach (WheelCollider wheel in wheels)
+                {
+                    // Don't zero out this value or the wheel completely lock up
+                    wheel.motorTorque = 0.01f;
+                    wheel.brakeTorque = GetBrakeForce();
+                }
             }
+            else if (Mathf.Abs(speed) < 4)
+            {
+
+                foreach (WheelCollider wheel in wheels)
+                {
+                    wheel.motorTorque = GetWheelMotorTorque();
+                }
+            }
+
+
+            // Down-force
+            rb.AddForce(-transform.up * speed * Downforce);
         }
-
-
-        // Down-force
-        rb.AddForce(-transform.up * speed * Downforce);
     }
-
+    public void ToogleHandbrake(bool h)
+    {
+        rb.drag = 2;
+        handbrake = h;
+    }
     #region Physics
     private void AddForceIfBetween(float a, float b)
     {

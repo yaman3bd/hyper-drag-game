@@ -288,7 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForceMode: 1
   ForcePower: 10
-  IsFrontWheelsDriving: 0
+  IsFrontWheelsDriving: 1
   IsRearWheelsDriving: 1
   MotorTorque:
     serializedVersion: 2
@@ -345,9 +345,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectsScript: {fileID: 1601448127}
   ComboShifts: 
-  EpicShiftTime: 0
-  EpicShiftMinTime: 0.5
-  EpicShiftMaxTime: 1
   EpicShiftThreshold: 0.1
   TooCloseShiftThreshold: 0.15
   ShiftSliderSpeed: 1

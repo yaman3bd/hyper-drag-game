@@ -24,27 +24,33 @@ public class AICarController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(TimeToWaitToDrive);
+           
 
             UpdateValues();
 
             var acc = Acceleration;
             var gears = UpdateDiffGearing();
             PCarController.Drive(acc, gears);
-
+            yield return new WaitForSeconds(TimeToWaitToDrive);
         }
     }
 
     void Start()
     {
         PCarController.GetInitialXPos(-10);
-       
+
+        LoadedLevelManager.Instance.OnRaceStarted += OnRaceStarted;
+    }
+    private void OnRaceStarted()
+    {
+        LoadedLevelManager.Instance.OnRaceStarted -= OnRaceStarted;
+
         min = max = 0.1f;
         TimeToWaitToDrive = 0.8f;
-      
+
         UpdateValues();
-        
-        StartCoroutine(MyUpdate());
+
+        StartCoroutine("MyUpdate");
     }
     private void UpdateValues()
     {
@@ -63,5 +69,12 @@ public class AICarController : MonoBehaviour
         var epicTime = EpicShiftsValues.GetEpicShiftTimeValue();
 
         return Acceleration.Remap(epicTime - min, epicTime + max, PCarController.diffGearingss[0], PCarController.diffGearingss[1]);
+    }
+    
+    public void ToogleHandbrake(bool val)
+    {
+
+        StopCoroutine("MyUpdate");
+        PCarController.ToogleHandbrake(val);
     }
 }

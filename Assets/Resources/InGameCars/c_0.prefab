@@ -356,7 +356,7 @@ MonoBehaviour:
   diffGearingss:
   - 2
   - 20
-  BrakeForce: 1500
+  BrakeForce: 30000
   Downforce: 10
   isGrounded: 0
   centerOfMass: {fileID: 4240741910461186681}

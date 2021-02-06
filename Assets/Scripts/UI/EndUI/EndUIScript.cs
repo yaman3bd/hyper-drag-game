@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System;
+using UnityEngine.SceneManagement;
 public class EndUIScript : GlobalUIScript
 {
     [Header("Images")]
@@ -13,19 +15,67 @@ public class EndUIScript : GlobalUIScript
     public RectTransform EndStateTextLeftRect;
     public RectTransform EndStateTextRightRect;
     public RectTransform EndStateTextOverlayRect;
+   
     [Header("Texts Targets")]
     public RectTransform EndStateTextLeftStartTargetRect;
     public RectTransform EndStateTextRightStartTargetRect;
     public RectTransform TextsEndTargetRect;
+    
     [Header("Texts Elements")]
     public TMP_Text EndStateTextLeft;
     public TMP_Text EndStateTextRight;
     public TMP_Text EndStateTextOverlay;
+    public TMP_Text ReplayText;
 
+    [Header("Buttons")]
+    public Button GarageButton;
+    public Button ReplayButton;
+
+    [Header("Timers")]
+    public float ReplayTextFadeDuration;
+    [Space]
+    public float BackgroundFadeDuration;
+    public float LeftRightTextsMoveDuration;
+    public float LeftRightTextsFadeDuration;
+    [Space]
+    public float OverlayTextMoveDuration;
+    public float OverlayTextScaleDuration;
+    public float OverlayTextFadeDuration;
+    [Header("Ease")]
+    public Ease ReplayTextEase;
+
+    private void Start()
+    {
+        GarageButton.onClick.AddListener(GarageButton_OnClick);
+        ReplayButton.onClick.AddListener(ReplayButton_OnClick);
+    }
+
+    private void ReplayButton_OnClick()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void GarageButton_OnClick()
+    {
+        SceneManager.LoadScene("Garage");
+    }
+    private IEnumerator TextFadeInOutAnimation()
+    {
+        while (true)
+        {
+            ReplayText.DOFade(1, ReplayTextFadeDuration).SetEase(ReplayTextEase);
+            yield return new WaitForSeconds(ReplayTextFadeDuration);
+            ReplayText.DOFade(0, ReplayTextFadeDuration).SetEase(ReplayTextEase);
+            yield return new WaitForSeconds(ReplayTextFadeDuration);
+
+        }
+    }
 
     private void InitTexts(bool winner)
     {
         Background.SetAlpha(0);
+
+        ReplayText.SetAlpha(0);
 
         float yPos = TextsEndTargetRect.anchoredPosition.y;
 
@@ -56,18 +106,14 @@ public class EndUIScript : GlobalUIScript
         EndStateTextOverlay.text = winnerText;
     }
 
-    public float BackgroundFadeDuration;
-    public float LeftRightTextsMoveDuration;
-    public float LeftRightTextsFadeDuration;
-
-    public float OverlayTextMoveDuration;
-    public float OverlayTextScaleDuration;
-    public float OverlayTextFadeDuration;
+   
 
     private void Animation()
     {
-        InitTexts(true);
+        InitTexts(LoadedLevelManager.Instance.DidWin);
 
+        StartCoroutine(TextFadeInOutAnimation());
+ 
         Sequence seq = DOTween.Sequence();
        
         seq.AppendCallback(() =>
@@ -94,12 +140,10 @@ public class EndUIScript : GlobalUIScript
         });
 
     }
-    private void Update()
+    public override void Show()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Animation();
-        }
+        base.Show(); 
+        Animation();
     }
 
 }

@@ -175,7 +175,7 @@ Transform:
   - {fileID: 1470814033009884417}
   - {fileID: 1470814034694400211}
   - {fileID: 6304428705007770354}
-  - {fileID: 735261765821505626}
+  - {fileID: 5627569062861333940}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForceMode: 1
   ForcePower: 10
-  IsFrontWheelsDriving: 0
+  IsFrontWheelsDriving: 1
   IsRearWheelsDriving: 1
   MotorTorque:
     serializedVersion: 2
@@ -266,9 +266,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectsScript: {fileID: 1909884690817440549}
   ComboShifts: 
-  EpicShiftTime: 0
-  EpicShiftMinTime: 0.5
-  EpicShiftMaxTime: 1
   EpicShiftThreshold: 0.1
   TooCloseShiftThreshold: 0.15
   ShiftSliderSpeed: 1
@@ -559,20 +556,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &8679083638988813467
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354828518100652617}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2959467708922500008, guid: b506fc83c9b2fdf48be45c8d2cef9d93, type: 3}
 --- !u!1 &4571814674734553417
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,17 +972,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Callisto_Blue
       objectReference: {fileID: 0}
+    - target: {fileID: 5502143055365364365, guid: ab4e61757f471164883bf93e00f3c0d1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab4e61757f471164883bf93e00f3c0d1, type: 3}
---- !u!1 &4354828518100652617 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4480475509718642032, guid: ab4e61757f471164883bf93e00f3c0d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 162883619948117817}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &735261765821505626 stripped
+--- !u!4 &5627569062861333940 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 609817066623147875, guid: ab4e61757f471164883bf93e00f3c0d1,
+  m_CorrespondingSourceObject: {fileID: 5502143055365364365, guid: ab4e61757f471164883bf93e00f3c0d1,
     type: 3}
   m_PrefabInstance: {fileID: 162883619948117817}
   m_PrefabAsset: {fileID: 0}
