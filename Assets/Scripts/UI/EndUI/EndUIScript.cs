@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using System;
-using UnityEngine.SceneManagement;
+using GameManagment;
 public class EndUIScript : GlobalUIScript
 {
     [Header("Images")]
@@ -26,7 +26,10 @@ public class EndUIScript : GlobalUIScript
     public TMP_Text EndStateTextRight;
     public TMP_Text EndStateTextOverlay;
     public TMP_Text ReplayText;
-
+    public TMP_Text BestTimeText;
+    public TMP_Text TimeText;
+    public TMP_Text NewScoreText;
+    public TMP_Text EpicPlayedText;
     [Header("Buttons")]
     public Button GarageButton;
     public Button ReplayButton;
@@ -52,12 +55,12 @@ public class EndUIScript : GlobalUIScript
 
     private void ReplayButton_OnClick()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+     GameManager.Instance.ScenesManager.LoadScene("InGame");
     }
 
     private void GarageButton_OnClick()
     {
-        SceneManager.LoadScene("Garage");
+        GameManager.Instance.ScenesManager.LoadScene("Garage");
     }
     private IEnumerator TextFadeInOutAnimation()
     {
@@ -142,8 +145,27 @@ public class EndUIScript : GlobalUIScript
     }
     public override void Show()
     {
-        base.Show(); 
+        base.Show();
         Animation();
+        SetText();
+    }
+    private void SetText()
+    {
+
+        if (TempSavedDataSettings.IsNewBestTime((int)LoadedLevelManager.Instance.PlayerRaceTime, true))
+        {
+            NewScoreText.text = "NEW SCORE";
+            EpicPlayedText.text = "EPIC PLAYED";
+        }
+        else
+        {
+            NewScoreText.text = "NO NEW SCORE";
+            EpicPlayedText.text = "NOT EPIC PLAYED";
+        }
+        BestTimeText.text = "BEST TIME: " + TempSavedDataSettings.GetBestTime().ToString();
+        TimeText.text = TimeText.text = "Time: " + ((int)LoadedLevelManager.Instance.PlayerRaceTime).ToString();
+      
+
     }
 
 }

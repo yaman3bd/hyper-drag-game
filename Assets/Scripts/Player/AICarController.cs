@@ -73,8 +73,11 @@ public class AICarController : MonoBehaviour
     
     public void ToogleHandbrake(bool val)
     {
-
         StopCoroutine("MyUpdate");
         PCarController.ToogleHandbrake(val);
+    }
+    public void SetCarToPosition(Vector3 pos)
+    {
+        PCarController.SetCarToPosition(pos);
     }
 }

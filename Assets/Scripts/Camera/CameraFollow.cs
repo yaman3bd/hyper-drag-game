@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
+
 public class CameraFollow : MonoBehaviour
 {
  	// Should the camera follow the target
@@ -34,16 +36,21 @@ public class CameraFollow : MonoBehaviour
 
 	void Start()
 	{
+		//LoadedLevelManager.Instance.OnRaceEnded += OnRaceStarted;
 		target = GameObject.FindObjectOfType<PlayerCarController>().transform;
- 		vehicle = target.GetComponent<CarController>();
+		vehicle = target.GetComponent<CarController>();
 		if (vehicle != null)
 		{
 			vehicle.Handbrake = false;
 		}
 	}
 
-
-
+	private void OnRaceStarted()
+	{
+		LoadedLevelManager.Instance.OnRaceEnded -= OnRaceStarted;
+		 
+		
+	}
 
 	void FixedUpdate()
 	{

@@ -24,6 +24,7 @@ public class GarageUIScript : GlobalUIScript
     [Header("Next And Prev Buttons")]
     public Button NextCarButton;
     public Button PrevCarButton;
+    public Button RaceButton;
 
     [Header("Buy Buttons")]
     public Button BuyCarButton;
@@ -40,7 +41,8 @@ public class GarageUIScript : GlobalUIScript
     {
         NextCarButton.onClick.AddListener(NextCarButton_OnClick);
         PrevCarButton.onClick.AddListener(PrevCarButton_OnClick);
-        BuyCarButton.onClick.AddListener(BuyCarButton_OnClick);      
+        BuyCarButton.onClick.AddListener(BuyCarButton_OnClick);
+        RaceButton.onClick.AddListener(PlayButton_OnClick);
     }
     public override void Show()
     {
@@ -111,6 +113,20 @@ public class GarageUIScript : GlobalUIScript
 
 
     }
+    private void UpdateGarageUIandGarage(string carID)
+
+    {
+
+        var carData = GameManager.Instance.CarsData.GetCarByID(carID);
+
+        UpdateUI(carData);
+
+        UpdateCar(carData);
+
+        UpdateCarID(carData);
+
+
+    }
     private void PlaceCar(GameObject car, Vector3 postion, Vector3 rotation, Transform parent)
     {
        
@@ -122,18 +138,23 @@ public class GarageUIScript : GlobalUIScript
     private void UpdateCarID(CarDataScriptableObject carData)
     {
         SelectedCarID = carData.ID;
-        GameManager.Instance.SelectedCarID = SelectedCarID;
+        TempSavedDataSettings.SaveCarID(SelectedCarID);
+ 
+    }
+    public void ShowCar(string id)
+    {
 
+        UpdateGarageUIandGarage(id);
     }
 
     private void BuyCarButton_OnClick()
     {
-        this.gameObject.SetActive(false);
-        MainUI.SetActive(true);
+     //   this.gameObject.SetActive(false);
+      //  MainUI.SetActive(true);
     }
-    // Update is called once per frame
-    void Update()
+    private void PlayButton_OnClick()
     {
-
+        GameManagment.GameManager.Instance.ScenesManager.LoadScene("InGame");
     }
+
 }

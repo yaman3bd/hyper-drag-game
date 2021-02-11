@@ -10,8 +10,14 @@ namespace GameManagment
         public CarsIDsScriptableObject CarsIds;
         public EpicShiftValuesScriptableObject PlayerEpicShiftsValues;
         public EpicShiftValuesScriptableObject AIEpicShiftsValues;
-
-        public string SelectedCarID;
+        public ScenesManager ScenesManager;
+        public string SelectedCarID
+        {
+            get
+            {
+                return TempSavedDataSettings.GetCarID();
+            }
+        }
         // Start is called before the first frame update
         void Start()
         {

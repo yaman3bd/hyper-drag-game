@@ -6,10 +6,15 @@ using UnityEngine.UI.Extensions;
 using DG.Tweening;
 using System;
 using TMPro;
-public class InGameUIManagerScript :GlobalUIScript
+using GameManagment;
+
+public class InGameUIManagerScript : GlobalUIScript
 {
     public static InGameUIManagerScript Instance;
     public EndUIScript EndUI;
+    public TutorialUIScript TutorialUI;
+    [Header("Buttons")]
+    public Button ReloadButton;
     [Header("UI")]
     public TMP_Text TimeText;
     public Slider ShiftSlider;
@@ -21,25 +26,32 @@ public class InGameUIManagerScript :GlobalUIScript
     public RectTransform ShiftSliderRect;
     public RectTransform ShiftStateTextRect;
     public RectTransform SpeedTextRect;
-
+    public RectTransform TimeTextRect;
+    public RectTransform ReloadButtonRect;
     [Header("Texts Targets")]
     public RectTransform ShiftSliderStartTargetRect;
     public RectTransform ShiftStateTextStartTargetRect;
     public RectTransform SpeedTextStartTargetRect;
+    public RectTransform TimeTextStartTargetRect;
+    public RectTransform ReloadButtonStartTargetRect;
     [Space]
     public RectTransform ShiftSliderEndTargetRect;
     public RectTransform ShiftStateTextEndTargetRect;
     public RectTransform SpeedTextEndTargetRect;
+    public RectTransform TimeTextEndTargetRect;
+    public RectTransform ReloadButtonEndTargetRect;
+
     [Header("Timers")]
     public float ShiftSliderMoveDuration;
     public float SpeedTextMoveDuration;
     public float ShiftStateTextMoveDuration;
     public float InGameUIElementsCanvasGroupFadeDuration;
 
-
+    private bool RaceStarted;
     private void Awake()
     {
         Instance = this;
+        RaceStarted = false;
     }
     private void InitAnimation()
     {
@@ -48,9 +60,13 @@ public class InGameUIManagerScript :GlobalUIScript
 
         ShiftSliderRect.anchoredPosition = ShiftSliderStartTargetRect.anchoredPosition;
 
-        ShiftStateTextRect.anchoredPosition = ShiftStateTextEndTargetRect.anchoredPosition;
+        //  ShiftStateTextRect.anchoredPosition = ShiftStateTextEndTargetRect.anchoredPosition;
 
         SpeedTextRect.anchoredPosition = SpeedTextStartTargetRect.anchoredPosition;
+        
+        TimeTextRect.anchoredPosition = TimeTextStartTargetRect.anchoredPosition;
+
+        ReloadButtonRect.anchoredPosition = ReloadButtonStartTargetRect.anchoredPosition;
 
     }
     private void StartAnimation()
@@ -61,6 +77,10 @@ public class InGameUIManagerScript :GlobalUIScript
         ShiftSliderRect.DOAnchorPos(ShiftSliderEndTargetRect.anchoredPosition, ShiftSliderMoveDuration);
 
         SpeedTextRect.DOAnchorPos(SpeedTextEndTargetRect.anchoredPosition, SpeedTextMoveDuration);
+       
+        TimeTextRect.DOAnchorPos(TimeTextEndTargetRect.anchoredPosition, SpeedTextMoveDuration);
+
+        ReloadButtonRect.DOAnchorPos(ReloadButtonEndTargetRect.anchoredPosition, ShiftSliderMoveDuration);
 
     }
     private void EndAnimation()
@@ -78,17 +98,43 @@ public class InGameUIManagerScript :GlobalUIScript
     private void Start()
     {
         LoadedLevelManager.Instance.OnRaceStarted += OnRaceStarted;
+        LoadedLevelManager.Instance.OnBeforeRaceStarted += OnBeforeRaceStarted;
+      
+        ReloadButton.onClick.AddListener(ReloadButton_OnClikc);
+    }
+
+    private void ReloadButton_OnClikc()
+    {
+        GameManager.Instance.ScenesManager.LoadScene("InGame");
+    }
+
+    private void OnBeforeRaceStarted()
+    {
+        LoadedLevelManager.Instance.OnBeforeRaceStarted -= OnBeforeRaceStarted;
+
+        InitAnimation();
+        StartAnimation();
     }
 
     private void OnRaceStarted()
     {
         LoadedLevelManager.Instance.OnRaceStarted -= OnRaceStarted;
-
-        InitAnimation();
-        StartAnimation();
+        if (!TempSavedDataSettings.IsTutorialPlayed())
+        {
+            TutorialUI.Show();
+        }
+        RaceStarted = true;
     }
+    public void HideTurtorialUI()
+    {
+        if (TutorialUI.gameObject.activeSelf)
+        {
+            TutorialUI.Hide();
+        }
+    }
+
     private void Update()
     {
-        TimeText.text = DateTime.Now.Second.ToString();
+        TimeText.text = "Time: " + ((int)LoadedLevelManager.Instance.PlayerRaceTime).ToString();
     }
 }

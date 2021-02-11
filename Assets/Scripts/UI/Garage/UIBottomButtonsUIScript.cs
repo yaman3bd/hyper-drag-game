@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using GameManagment;
 public class UIBottomButtonsUIScript : MonoBehaviour
 {
     public GameObject[] cars;
@@ -40,15 +41,25 @@ public class UIBottomButtonsUIScript : MonoBehaviour
         GarageUIButton.onClick.AddListener(GarageUIButton_OnClick);
         MainUIButton.onClick.AddListener(MainUIButton_OnClick);
         StoreUIButton.onClick.AddListener(StoreUIButton_OnClick);
+        
+        string id = TempSavedDataSettings.GetCarID();
+        if (string.IsNullOrEmpty(id))
+        {
+            id = "c_0";
+        }
+        GarageUI.ShowCar(id);
 
-        StartCoroutine(Test());
+        StartCoroutine(PlaceUIItems());
     }
-    IEnumerator Test()
+
+    IEnumerator PlaceUIItems()
     {
         SetWidthToMainUILayoutElement();
-
+        GameManager.Instance.ScenesManager.UpdateProgress(0.75f);
         yield return new WaitForEndOfFrame();
-        GarageUIButton_OnClick();
+        MainUIButton_OnClick();
+        GameManager.Instance.ScenesManager.UpdateProgress(1f);
+
     }
     private void SettingsUIButton_OnClick()
     {
@@ -76,15 +87,13 @@ public class UIBottomButtonsUIScript : MonoBehaviour
 
 
         MenusScroll.DOHorizontalNormalizedPos(pos, UIItemsScrollDuration);
-     
+
     }
     public bool test = false;
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        SetWidthToMainUILayoutElement();
-        var pos = MenusScroll.ScrollToCenter(TestT, RectTransform.Axis.Horizontal);
-        MenusScroll.horizontalNormalizedPosition = pos;
+
         #region Test
         /*  if (!test)
          {
@@ -159,19 +168,19 @@ public class UIBottomButtonsUIScript : MonoBehaviour
     private void SetWidthToMainUILayoutElement()
     {
         var width = Parent.rect.width;
-       /* var items = MenusScroll.content.childCount;
-        for (int i = 0; i < items; i++)
-        {
-            var item = MenusScroll.content.GetChild(i);
-            if (item.gameObject.activeSelf)
-            {
-                item.GetComponent<LayoutElement>().preferredHeight = width;
-            }
-        }*/
-        
+        /* var items = MenusScroll.content.childCount;
+         for (int i = 0; i < items; i++)
+         {
+             var item = MenusScroll.content.GetChild(i);
+             if (item.gameObject.activeSelf)
+             {
+                 item.GetComponent<LayoutElement>().preferredHeight = width;
+             }
+         }*/
+
         SettingsUI.LayoutElement.preferredWidth = width;
-         GarageUI.LayoutElement.preferredWidth = width;
-         MainMenuUI.LayoutElement.preferredWidth = width;
-         StoreUI.LayoutElement.preferredWidth = width;
+        GarageUI.LayoutElement.preferredWidth = width;
+        MainMenuUI.LayoutElement.preferredWidth = width;
+        StoreUI.LayoutElement.preferredWidth = width;
     }
 }

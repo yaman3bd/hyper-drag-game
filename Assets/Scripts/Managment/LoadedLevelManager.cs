@@ -10,6 +10,7 @@ public class LoadedLevelManager : MonoBehaviour
     public static LoadedLevelManager Instance;
     public Action OnRaceStarted;
     public Action OnRaceEnded;
+    public Action OnBeforeRaceStarted;
 
     [HideInInspector]
     public PlayerCarController Player;
@@ -17,6 +18,7 @@ public class LoadedLevelManager : MonoBehaviour
     public AICarController AI;
     [HideInInspector]
     public bool DidWin;
+    private bool ShouldUpdate;
     public CounterAnimation Counter;
 
 
@@ -24,24 +26,37 @@ public class LoadedLevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Instance = this;
+         Instance = this;
         DidWin = false;
+        GameManager.Instance.ScenesManager.UpdateProgress(0.75f);
+
         var playerCar = Instantiate(Resources.Load<GameObject>("InGameCars/" + GameManager.Instance.SelectedCarID));
 
 
         Player = playerCar.AddComponent<PlayerCarController>();
         Player.PCarController = Player.GetComponent<CarController>();
+        Player.SetCarToPosition(Vector3.up);
         Player.tag = "Player";
+        GameManager.Instance.ScenesManager.UpdateProgress(1f);
+
         var aICar = Instantiate(Resources.Load<GameObject>("InGameCars/c_" + UnityEngine.Random.Range(0, 3)));
         AI = aICar.AddComponent<AICarController>();
         AI.PCarController = AI.GetComponent<CarController>();
+        AI.SetCarToPosition(Vector3.up);
 
     }
-    IEnumerator CountdownCoroutine()
+    private void Start()
     {
+        StartCoroutine(CountdownCoroutine());
+    }
+    private IEnumerator CountdownCoroutine()
+    {
+        yield return new WaitUntil(() => GameManager.Instance.ScenesManager.LoadDone);
+        yield return new WaitForSeconds(TimeToWaitToStartGame);
         Counter.Animation("3");
         yield return new WaitForSeconds(TimeToWaitToStartGame);
         Counter.Animation("2");
+        BeforeRaceStarted();
         yield return new WaitForSeconds(TimeToWaitToStartGame);
         Counter.Animation("1");
         yield return new WaitForSeconds(TimeToWaitToStartGame);
@@ -51,21 +66,42 @@ public class LoadedLevelManager : MonoBehaviour
     }
     private void StartRace()
     {
+        ShouldUpdate = true;
         if (OnRaceStarted != null)
         {
             OnRaceStarted();
         }
     }
-    private void Start()
+    private void BeforeRaceStarted()
     {
-        StartCoroutine(CountdownCoroutine());
+        if (OnBeforeRaceStarted != null)
+        {
+            OnBeforeRaceStarted();
+        }
     }
+
     public void EndRace(bool winner)
     {
         DidWin = winner;
+        ShouldUpdate = false;
+
         if (OnRaceEnded != null)
         {
             OnRaceEnded();
         }
     }
+    public float PlayerRaceTime
+    {
+        get;
+        private set;
+    }
+    private void Update()
+    {
+        if (!ShouldUpdate)
+        {
+            return;
+        }
+        PlayerRaceTime += Time.deltaTime;
+    }
+   
 }

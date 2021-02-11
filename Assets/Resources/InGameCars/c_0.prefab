@@ -316,6 +316,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36502b310f0b41a46971ade2bb073cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxX: 0.25
+  MaxY: 50
+  MaxZ: 0.25
   ForceMode: 1
   ForcePower: 10
   IsFrontWheelsDriving: 0

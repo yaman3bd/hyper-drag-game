@@ -29,7 +29,6 @@ public class MainMenuUIScript : GlobalUIScript
 
     private void PlayButton_OnClick()
     {
-        SceneManager.LoadScene("InGame");
-
+        GameManagment.GameManager.Instance.ScenesManager.LoadScene("InGame");
     }
 }

@@ -40,7 +40,6 @@ public class PlayerCarController : MonoBehaviour
         IsRaceStarted = false;
         InGameUIManagerScript.Instance.EndUI.Show();
         InGameUIManagerScript.Instance.Hide();
-        Debug.LogError(DateTime.Now.Second - StartedTime.Second);
     }
 
     private void OnRaceStarted()
@@ -58,12 +57,17 @@ public class PlayerCarController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && IsRaceStarted)
         {
+            InGameUIManagerScript.Instance.HideTurtorialUI();
             shiftsScript.ResetShiftSliderTime();
             shiftsScript.HandleShiftState();
             shiftsScript.UpdateEpicShiftValues();
-            var acc = shiftsScript.GetShiftTime();
+            var acc = shiftsScript.GetShiftTime();         
             var gears = UpdateDiffGearing();
             PCarController.Drive(acc, gears);
+        }
+        if (!IsRaceStarted && transform.position.y >= 5)
+        {
+            Debug.Break();
         }
     }
 
@@ -74,6 +78,10 @@ public class PlayerCarController : MonoBehaviour
     public void ToogleHandbrake(bool val)
     {
         PCarController.ToogleHandbrake(val);
+    }
+    public void SetCarToPosition(Vector3 pos)
+    {
+        PCarController.SetCarToPosition(pos);
     }
 }
 

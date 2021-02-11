@@ -123,6 +123,7 @@ public static class UtilitiesScript
     {
         rt.offsetMin = new Vector2(rt.offsetMin.x, bottom);
     }
+#if UNITY_EDITOR
     public static List<T> LoadAllPrefabsOfType<T>(string path) where T :UnityEngine.Object
     {
         if (path != "")
@@ -155,4 +156,5 @@ public static class UtilitiesScript
         }
         return prefabComponents;
     }
+#endif
 }

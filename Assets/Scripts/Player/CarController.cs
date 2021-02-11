@@ -8,7 +8,10 @@ using UnityEngine.UI.Extensions;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
- 
+    [Header("Rotation")]
+    public float MaxX, MaxZ;
+    [UnityEngine.Serialization.FormerlySerializedAs("MaxY")]
+    public float RotationSpeed;
     [Header("Push Force")]
     public ForceMode ForceMode;
     public float ForcePower;
@@ -62,7 +65,7 @@ public class CarController : MonoBehaviour
 
     // Private variables set at the start
     private Rigidbody rb;
-     private List<WheelCollider> wheels;
+    private List<WheelCollider> wheels;
 
     private float CurrentDiffGearing;
     private float Acceleration;
@@ -70,7 +73,7 @@ public class CarController : MonoBehaviour
 
     private void Awake()
     {
-       
+
         rb = GetComponent<Rigidbody>();
     }
 
@@ -84,20 +87,33 @@ public class CarController : MonoBehaviour
 
         GetWheels();
 
- 
+
     }
- 
+    private void LimitRotation()
+    {
+
+        var rot = transform.rotation;
+        rot.x = Mathf.Clamp(rot.x, -MaxX, MaxX);
+        rot.z = Mathf.Clamp(rot.z, -MaxZ, MaxZ);
+
+        if (Math.Abs(transform.rotation.x) > Math.Abs(rot.x) || Math.Abs(transform.rotation.z) > Math.Abs(rot.z))
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, RotationSpeed * Time.deltaTime);
+        }
+
+    }
     void Update()
     {
+        LimitRotation();
 
         isGrounded = IsGrounded;
 
         FreezeTransformPosAndRot(InitialXPos, 0);
-        
+
     }
-    public void Drive(float acceleration,float currentDiffGearing)
+    public void Drive(float acceleration, float currentDiffGearing)
     {
-     
+
         UpdateAcceleration(acceleration);
         UpdateCurrentDiffGearing(currentDiffGearing);
         AddForceIfBetween(0.5f, 1.0f);
@@ -121,7 +137,7 @@ public class CarController : MonoBehaviour
 
         // Mesure current speed
         speed = transform.InverseTransformDirection(rb.velocity).z * 3.6f;
-       
+
         if (handbrake)
         {
             foreach (WheelCollider wheel in wheels)
@@ -164,6 +180,7 @@ public class CarController : MonoBehaviour
             rb.AddForce(-transform.up * speed * Downforce);
         }
     }
+    
     public void ToogleHandbrake(bool h)
     {
         rb.drag = 2;
@@ -189,6 +206,10 @@ public class CarController : MonoBehaviour
             wheel.motorTorque = Mathf.Epsilon;
             wheel.brakeTorque = BrakeForce * BrakeForce * BrakeForce;
         }
+    }
+    public void SetCarToPosition(Vector3 pos)
+    {
+        transform.position = pos;
     }
 
     #endregion
