@@ -151,13 +151,17 @@ public class EndUIScript : GlobalUIScript
     }
     private void SetText()
     {
+        var time = (int)LoadedLevelManager.Instance.PlayerRaceTime;
+        if (time < TempSavedDataSettings.GetBestTime())
+        {
 
-        if (TempSavedDataSettings.IsNewBestTime((int)LoadedLevelManager.Instance.PlayerRaceTime, true))
+        }
+      //  if (TempSavedDataSettings.IsNewBestTime(, true))
         {
             NewScoreText.text = "NEW SCORE";
             EpicPlayedText.text = "EPIC PLAYED";
         }
-        else
+       // else
         {
             NewScoreText.text = "NO NEW SCORE";
             EpicPlayedText.text = "NOT EPIC PLAYED";
@@ -165,7 +169,6 @@ public class EndUIScript : GlobalUIScript
         BestTimeText.text = "BEST TIME: " + TempSavedDataSettings.GetBestTime().ToString();
         TimeText.text = TimeText.text = "Time: " + ((int)LoadedLevelManager.Instance.PlayerRaceTime).ToString();
       
-
     }
 
 }

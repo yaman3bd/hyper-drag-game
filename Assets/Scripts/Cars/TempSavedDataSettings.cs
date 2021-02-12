@@ -23,7 +23,7 @@ public static class TempSavedDataSettings
 
     public static bool IsNewBestTime(int val, bool updateBestTime)
     {
-        if (val < GetBestTime())
+        if (val < GetBestTime() || GetBestTime() == 0)
         {
             if (updateBestTime)
             {
