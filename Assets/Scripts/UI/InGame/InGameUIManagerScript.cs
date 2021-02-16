@@ -115,7 +115,7 @@ public class InGameUIManagerScript : GlobalUIScript
         InitAnimation();
         StartAnimation();
     }
-
+ 
     private void OnRaceStarted()
     {
         LoadedLevelManager.Instance.OnRaceStarted -= OnRaceStarted;

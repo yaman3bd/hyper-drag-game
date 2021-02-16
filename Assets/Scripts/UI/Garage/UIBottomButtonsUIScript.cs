@@ -93,7 +93,8 @@ public class UIBottomButtonsUIScript : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-
+        var pos = MenusScroll.ScrollToCenter(GarageUI.UIRect, RectTransform.Axis.Horizontal);
+        MenusScroll.horizontalNormalizedPosition = pos;
         #region Test
         /*  if (!test)
          {
