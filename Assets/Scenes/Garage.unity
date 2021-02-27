@@ -204,6 +204,7 @@ MonoBehaviour:
   ApplySafeAreaIn:
     VerticalAxis: 3
     HorizontalAxis: 0
+    AllAxises: 0
 --- !u!1 &362471600
 GameObject:
   m_ObjectHideFlags: 0
@@ -1519,7 +1520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 439ca96d0f6578a44b8416ca9cd96fb5, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 2d13a7f4690af1d44ac46493bcaacd52, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -2282,8 +2283,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2311854491205333345}
   m_HandleRect: {fileID: 2311854491205333347}
   m_Direction: 0
-  m_Value: 0.50000036
-  m_Size: 0.75255543
+  m_Value: 0.5000005
+  m_Size: 0.82545763
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3742,6 +3743,7 @@ MonoBehaviour:
   ApplySafeAreaIn:
     VerticalAxis: 2
     HorizontalAxis: 0
+    AllAxises: 0
 --- !u!222 &2311854491074096077
 CanvasRenderer:
   m_ObjectHideFlags: 0
