@@ -35,7 +35,7 @@ public class GarageUIScript : GlobalUIScript
     public Slider GearsSliders;
 
     public int CarIndex;
-    public string SelectedCarID;
+    public CarDataScriptableObject SelectedCarData;
     // Start is called before the first frame update
     void Start()
     {
@@ -93,8 +93,8 @@ public class GarageUIScript : GlobalUIScript
         {
             activeCar.Model.SetActive(false);
         }
-        
-        activeCar = CarsLoader.GetCar(carData.ID);
+
+        activeCar = CarsLoader.GetCar(carData.ID, carData.ID + "_" + carData.GetColorName());
         PlaceCar(activeCar.Model, CarPosition, CarRotation, CarsParent);
         activeCar.Model.SetActive(true);
 
@@ -137,9 +137,11 @@ public class GarageUIScript : GlobalUIScript
     }
     private void UpdateCarID(CarDataScriptableObject carData)
     {
-        SelectedCarID = carData.ID;
-        TempSavedDataSettings.SaveCarID(SelectedCarID);
- 
+        SelectedCarData = carData;
+
+        TempSavedDataSettings.SaveCarID(SelectedCarData.ID);
+        TempSavedDataSettings.SaveCarColorName(SelectedCarData.ID, SelectedCarData.GetColorName());
+
     }
     public void ShowCar(string id)
     {

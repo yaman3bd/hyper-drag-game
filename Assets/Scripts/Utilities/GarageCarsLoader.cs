@@ -24,29 +24,28 @@ public class GarageCarsLoader : MonoBehaviour
     /// <param name="id">car id</param>
     /// <param name="isActive">is active after Instantiate</param>
     /// <returns></returns>
-    public GarageCarData GetCar(string id, bool isActive = false)
+    public GarageCarData GetCar(string id, string fullName, bool isActive = false)
     {
 
         if (!GarageCars.ContainsKey(id))
         {
-            LoadCar(id, isActive);
+            LoadCar(id, fullName, isActive);
         }
 
         return GarageCars[id];
 
     }
-    private void LoadCar(string id, bool isActive)
+    private void LoadCar(string id, string fullName, bool isActive)
     {
 
         var garageCar = new GarageCarData();
         garageCar.ID = id;
         garageCar.Isloaded = true;
         // garageCar.IsActive = isActive;
-        GameObject car = Instantiate(Resources.Load<GameObject>(CarsResourcesPath + id));
+        GameObject car = Instantiate(Resources.Load<GameObject>(CarsResourcesPath + id + "/" + fullName));
         car.SetActive(isActive);
         garageCar.Model = car;
         GarageCars.Add(id, garageCar);
-
     }
 
 }

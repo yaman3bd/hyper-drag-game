@@ -12,6 +12,14 @@ public static class TempSavedDataSettings
     {
         return PlayerPrefs.GetString("CarID");
     }
+    public static void SaveCarColorName(string carID, string colorName)
+    {
+        PlayerPrefs.SetString(carID + "_CarColorName", colorName);
+    }
+    public static string GetCarColorName(string carID)
+    {
+        return PlayerPrefs.GetString(carID + "_CarColorName");
+    }
     public static void SaveBestTime(int val)
     {
         PlayerPrefs.SetInt("BestTime", val);

@@ -20,6 +20,7 @@ MonoBehaviour:
   ColorsNames:
   - Black
   - Blue
-  - GreenB
+  - Green
   - Orange
   - Wine
+  DefaultColorsName: Wine

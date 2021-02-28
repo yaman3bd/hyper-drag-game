@@ -26,12 +26,18 @@ public class LoadedLevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-         Instance = this;
+        Instance = this;
         DidWin = false;
         GameManager.Instance.ScenesManager.UpdateProgress(0.75f);
 
-        var playerCar = Instantiate(Resources.Load<GameObject>("InGameCars/" + GameManager.Instance.SelectedCarID));
+        var playerCar = Instantiate(Resources.Load<GameObject>("InGameCars/" + GameManager.Instance.SelectedCarData.ID + "/" + GameManager.Instance.SelectedCarData.ID));
 
+        var playerCarBody = Instantiate(Resources.Load<GameObject>("InGameCars/" + GameManager.Instance.SelectedCarData.ID + "/Body/" +
+            GameManager.Instance.SelectedCarData.ID + "_body_" + GameManager.Instance.SelectedCarData.GetColorName()));
+
+        playerCarBody.transform.SetParent(playerCar.transform);
+        playerCarBody.transform.position = Vector3.zero;
+        playerCarBody.transform.SetAsFirstSibling();
 
         Player = playerCar.AddComponent<PlayerCarController>();
         Player.PCarController = Player.GetComponent<CarController>();
@@ -39,7 +45,19 @@ public class LoadedLevelManager : MonoBehaviour
         Player.tag = "Player";
         GameManager.Instance.ScenesManager.UpdateProgress(1f);
 
-        var aICar = Instantiate(Resources.Load<GameObject>("InGameCars/c_" + UnityEngine.Random.Range(0, 3)));
+        var id = UnityEngine.Random.Range(0, 3);
+        var aiCarData = GameManager.Instance.CarsData.GetCarByIndex(id);
+        var carPath = "InGameCars/" + aiCarData.ID + "/" + aiCarData.ID;
+        var aICar = Instantiate(Resources.Load<GameObject>(carPath));
+
+        var carBodyPath = "InGameCars/" + aiCarData.ID + "/Body/" + aiCarData.ID + "_body_" + aiCarData.GetColorName();
+
+        var aICarBody = Instantiate(Resources.Load<GameObject>(carBodyPath));
+
+        aICarBody.transform.SetParent(aICar.transform);
+        aICarBody.transform.position = Vector3.zero;
+        aICarBody.transform.SetAsFirstSibling();
+
         AI = aICar.AddComponent<AICarController>();
         AI.PCarController = AI.GetComponent<CarController>();
         AI.SetCarToPosition(Vector3.up);

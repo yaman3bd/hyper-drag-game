@@ -18,16 +18,12 @@ namespace GameManagment
                 return TempSavedDataSettings.GetCarID();
             }
         }
-        // Start is called before the first frame update
-        void Start()
+        public CarDataScriptableObject SelectedCarData
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            get
+            {
+                return this.CarsData.GetCarByID(TempSavedDataSettings.GetCarID());
+            }
         }
     }
 }
