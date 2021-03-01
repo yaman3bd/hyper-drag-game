@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3678487068744319007}
   - component: {fileID: 7039583714560827876}
   - component: {fileID: 6830004379280906072}
-  - component: {fileID: 704448812534226396}
   - component: {fileID: 2654119183159702860}
   m_Layer: 0
   m_Name: c_18_body_Yellow
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &704448812534226396
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4138498717831455782}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.0508686, z: 4.25}
-  m_Center: {x: 0, y: 0.6477242, z: 0.0874356}
 --- !u!64 &2654119183159702860
 MeshCollider:
   m_ObjectHideFlags: 0

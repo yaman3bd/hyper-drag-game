@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7788519532443305606}
   - component: {fileID: 4515805681410107261}
   - component: {fileID: 131714397507719617}
-  - component: {fileID: 1881209518712635379}
   - component: {fileID: 1781052766533516201}
   m_Layer: 0
   m_Name: c_14_body_Gray
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1881209518712635379
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7382556372445356735}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 0.9993924, z: 4.15}
-  m_Center: {x: 0, y: 0.6669553, z: 0.002384901}
 --- !u!64 &1781052766533516201
 MeshCollider:
   m_ObjectHideFlags: 0

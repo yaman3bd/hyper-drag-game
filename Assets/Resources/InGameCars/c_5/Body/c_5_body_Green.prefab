@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 6414943285203557094}
   - component: {fileID: 845349098286463773}
   - component: {fileID: 3802133586483400097}
-  - component: {fileID: 6428868138451659230}
   - component: {fileID: 5595998245141200006}
   m_Layer: 0
-  m_Name: c_5_body_GreenB
+  m_Name: c_5_body_Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &6428868138451659230
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6008943444021133023}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.2583964, z: 4.7}
-  m_Center: {x: 0, y: 0.818418, z: -0.10094929}
 --- !u!64 &5595998245141200006
 MeshCollider:
   m_ObjectHideFlags: 0

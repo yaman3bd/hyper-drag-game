@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6927591435393464498}
   - component: {fileID: 3647497730977175881}
   - component: {fileID: 1001539648303099893}
-  - component: {fileID: 2376985275141816758}
   - component: {fileID: 6795749048523839440}
   m_Layer: 0
   m_Name: c_3_body_Purple
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2376985275141816758
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7656617870619909259}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.139518, z: 4.95}
-  m_Center: {x: 0, y: 0.84266603, z: -0.028760195}
 --- !u!64 &6795749048523839440
 MeshCollider:
   m_ObjectHideFlags: 0

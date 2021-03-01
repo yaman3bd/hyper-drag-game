@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 9137167607731812948}
   - component: {fileID: 3202202202757471151}
   - component: {fileID: 1371395785248632083}
-  - component: {fileID: 3490566107675820761}
   - component: {fileID: 5919511756950030204}
   m_Layer: 0
   m_Name: c_5_body_Orange
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &3490566107675820761
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8408158178160680557}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.2583964, z: 4.7}
-  m_Center: {x: 0, y: 0.818418, z: -0.10094929}
 --- !u!64 &5919511756950030204
 MeshCollider:
   m_ObjectHideFlags: 0

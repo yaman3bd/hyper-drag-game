@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8605444373912042864}
   - component: {fileID: 2725120294488595595}
   - component: {fileID: 1921135593019943479}
-  - component: {fileID: 1555923092189228851}
   - component: {fileID: 4826180213735467903}
   m_Layer: 0
   m_Name: c_11_body_DarkGreen
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1555923092189228851
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9011373857087838537}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.2205546, z: 4.55}
-  m_Center: {x: 0, y: 0.80137944, z: -0.03031075}
 --- !u!64 &4826180213735467903
 MeshCollider:
   m_ObjectHideFlags: 0

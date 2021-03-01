@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8725542552762146151}
   - component: {fileID: 3146440335285763228}
   - component: {fileID: 1500483782577768992}
-  - component: {fileID: 7090295115230737238}
   - component: {fileID: 2566817191990014927}
   m_Layer: 0
   m_Name: c_1_body_Red
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7090295115230737238
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8319591548042754398}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.875, y: 1.1237082, z: 4.6}
-  m_Center: {x: 0, y: 0.72202694, z: 0.0082371235}
 --- !u!64 &2566817191990014927
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6030706950420495632}
   - component: {fileID: 75536913860173035}
   - component: {fileID: 4500486570087017047}
-  - component: {fileID: 6545726515507611836}
   - component: {fileID: 8611031956153545772}
   m_Layer: 0
   m_Name: c_19_body_Pink
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &6545726515507611836
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6472546583754152233}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.2116444, z: 4.5}
-  m_Center: {x: 0, y: 0.79294086, z: 0.030870795}
 --- !u!64 &8611031956153545772
 MeshCollider:
   m_ObjectHideFlags: 0

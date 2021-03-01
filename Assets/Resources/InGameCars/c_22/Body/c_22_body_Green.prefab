@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7889463695477605310}
   - component: {fileID: 4593738720176431685}
   - component: {fileID: 51951762939155705}
-  - component: {fileID: 613305174039271667}
   - component: {fileID: 1912873682395622100}
   m_Layer: 0
   m_Name: c_22_body_Green
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &613305174039271667
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7430793947197728647}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 1.6, z: 4.8}
-  m_Center: {x: 0, y: 1.05, z: 0.14703858}
 --- !u!64 &1912873682395622100
 MeshCollider:
   m_ObjectHideFlags: 0

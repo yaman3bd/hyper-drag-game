@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8871356205352817980}
   - component: {fileID: 2999501942106453191}
   - component: {fileID: 1646333683893404283}
-  - component: {fileID: 9135709761076540122}
   - component: {fileID: 1787573001913796463}
   m_Layer: 0
   m_Name: c_20_body_Wine
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &9135709761076540122
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8178283626410832133}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9894983, y: 1.278445, z: 4.179687}
-  m_Center: {x: 0, y: 0.79956055, z: 0.1835661}
 --- !u!64 &1787573001913796463
 MeshCollider:
   m_ObjectHideFlags: 0
