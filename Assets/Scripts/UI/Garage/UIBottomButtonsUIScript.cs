@@ -35,7 +35,6 @@ public class UIBottomButtonsUIScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         SettingsUIButton.onClick.AddListener(SettingsUIButton_OnClick);
         GarageUIButton.onClick.AddListener(GarageUIButton_OnClick);
         MainUIButton.onClick.AddListener(MainUIButton_OnClick);
@@ -45,7 +44,7 @@ public class UIBottomButtonsUIScript : MonoBehaviour
 
         if (string.IsNullOrEmpty(id))
         {
-            id = "c_0";
+            id = GameManager.Instance.DefaultCarID;
         }
         GarageUI.ShowCar(id);
 
@@ -68,11 +67,19 @@ public class UIBottomButtonsUIScript : MonoBehaviour
 
     private void GarageUIButton_OnClick()
     {
+        GameManager.Instance.BackButton.BackButtonCallBack = () =>
+        {
+            MainUIButton_OnClick();
+        };
         UIMenuItemAnimation(GarageUI.UIRect, GarageUIButtonRect);
     }
 
     private void MainUIButton_OnClick()
     {
+        GameManager.Instance.BackButton.BackButtonCallBack = () =>
+        {
+            Application.Quit();
+        }; 
         UIMenuItemAnimation(MainMenuUI.UIRect, MainUIButtonRect);
     }
 

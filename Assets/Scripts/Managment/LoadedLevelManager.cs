@@ -12,6 +12,7 @@ public class LoadedLevelManager : MonoBehaviour
     public Action OnRaceEnded;
     public Action OnBeforeRaceStarted;
 
+    public EndLineScript EndLine;
     [HideInInspector]
     public PlayerCarController Player;
     [HideInInspector] 
@@ -38,30 +39,29 @@ public class LoadedLevelManager : MonoBehaviour
         playerCarBody.transform.SetParent(playerCar.transform);
         playerCarBody.transform.position = Vector3.zero;
         playerCarBody.transform.SetAsFirstSibling();
-
+        
         Player = playerCar.AddComponent<PlayerCarController>();
         Player.PCarController = Player.GetComponent<CarController>();
         Player.SetCarToPosition(Vector3.up);
         Player.tag = "Player";
         GameManager.Instance.ScenesManager.UpdateProgress(1f);
 
-        var id = UnityEngine.Random.Range(0, 3);
-        var aiCarData = GameManager.Instance.CarsData.GetCarByIndex(id);
+
+        var aiCarData = GameManager.Instance.CarsData.GetRandomCar();
         var carPath = "InGameCars/" + aiCarData.ID + "/" + aiCarData.ID;
         var aICar = Instantiate(Resources.Load<GameObject>(carPath));
 
-        var carBodyPath = "InGameCars/" + aiCarData.ID + "/Body/" + aiCarData.ID + "_body_" + aiCarData.GetColorName();
+         var carBodyPath = "InGameCars/" + aiCarData.ID + "/Body/" + aiCarData.ID + "_body_" + aiCarData.GetColorName();
 
         var aICarBody = Instantiate(Resources.Load<GameObject>(carBodyPath));
 
         aICarBody.transform.SetParent(aICar.transform);
         aICarBody.transform.position = Vector3.zero;
         aICarBody.transform.SetAsFirstSibling();
-
         AI = aICar.AddComponent<AICarController>();
         AI.PCarController = AI.GetComponent<CarController>();
         AI.SetCarToPosition(Vector3.up);
-
+     
     }
     private void Start()
     {
@@ -115,8 +115,11 @@ public class LoadedLevelManager : MonoBehaviour
     }
     private void Update()
     {
+         
         if (!ShouldUpdate)
         {
+         /*   Player.SetCarToPosition(new Vector3(0,0.1f,0));
+            AI.SetCarToPosition(new Vector3(0, 0.1f, 0));*/
             return;
         }
         PlayerRaceTime += Time.deltaTime;

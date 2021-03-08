@@ -4,6 +4,7 @@ using UnityEngine;
 using GameManagment;
 public class AICarController : MonoBehaviour
 {
+    public float DistancTravled;
     [HideInInspector]
     public CarController PCarController;
    
@@ -19,17 +20,30 @@ public class AICarController : MonoBehaviour
     {
         EpicShiftsValues = GameManager.Instance.AIEpicShiftsValues;
     }
-
+    private float shiftDelay;
+ 
+    private void Update()
+    {
+        DistancTravled = transform.position.z;
+    }
     IEnumerator MyUpdate()
     {
         while (true)
         {
-           
+
 
             UpdateValues();
 
             var acc = Acceleration;
             var gears = UpdateDiffGearing();
+            float now = Time.timeSinceLevelLoad;
+
+            if (now > shiftDelay)
+            {
+                PCarController.ShiftUp();
+                shiftDelay = now + Random.Range(1f, 2f);
+            }
+
             PCarController.Drive(acc, gears);
             yield return new WaitForSeconds(TimeToWaitToDrive);
         }
@@ -40,11 +54,13 @@ public class AICarController : MonoBehaviour
         PCarController.GetInitialXPos(-10);
 
         LoadedLevelManager.Instance.OnRaceStarted += OnRaceStarted;
+
     }
     private void OnRaceStarted()
     {
         LoadedLevelManager.Instance.OnRaceStarted -= OnRaceStarted;
 
+        PCarController.FreePositionY();
         min = max = 0.1f;
         TimeToWaitToDrive = 0.8f;
 
@@ -79,5 +95,6 @@ public class AICarController : MonoBehaviour
     public void SetCarToPosition(Vector3 pos)
     {
         PCarController.SetCarToPosition(pos);
+        PCarController.FreezePositionY();
     }
 }

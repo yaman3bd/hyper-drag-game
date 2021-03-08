@@ -7,12 +7,26 @@ public class CarsScriptableObject : ScriptableObject
 {
     public List<CarDataScriptableObject> CarsDataList;
 
+    public List<CarDataScriptableObject> FilteredCarsDataList;
+
+
     public CarDataScriptableObject GetCarByIndex(int index)
     {
-        return CarsDataList[index];
+        return FilteredCarsDataList[index];
     }
     public CarDataScriptableObject GetCarByID(string id)
     {
-        return CarsDataList.Where(c => c.ID == id).FirstOrDefault();
+        return FilteredCarsDataList.Where(c => c.ID == id).FirstOrDefault();
+    }
+    public CarDataScriptableObject GetRandomCar()
+    {
+        var id = Random.Range(0, FilteredCarsDataList.Count - 1);
+
+        return GetCarByIndex(id);
+
+    }
+    public void Filter()
+    {
+        FilteredCarsDataList = CarsDataList.Where(c => c.IsAvailable).ToList();
     }
 }

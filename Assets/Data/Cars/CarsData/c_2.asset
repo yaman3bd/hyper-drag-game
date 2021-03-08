@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978782be9ddb0f4a81c40f294d97460, type: 3}
   m_Name: c_2
   m_EditorClassIdentifier: 
+  IsAvailable: 1
   Name: Doradus
   ID: c_2
   ClassName: A Class

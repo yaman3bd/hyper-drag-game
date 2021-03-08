@@ -8,7 +8,9 @@ using UnityEngine.UI.Extensions;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
+
     [Header("Rotation")]
+    public bool LimitRotations;
     public float MaxX, MaxZ;
     [UnityEngine.Serialization.FormerlySerializedAs("MaxY")]
     public float RotationSpeed;
@@ -70,6 +72,8 @@ public class CarController : MonoBehaviour
     private float CurrentDiffGearing;
     private float Acceleration;
     private float InitialXPos;
+    private float[] GearBox;
+    private int CurrentGear;
 
     private void Awake()
     {
@@ -79,19 +83,49 @@ public class CarController : MonoBehaviour
 
     void Start()
     {
-
         if (rb != null && centerOfMass != null)
         {
             rb.centerOfMass = centerOfMass.localPosition;
         }
-
+        this.ForceMode = GameManagment.GameManager.Instance.GameSettings.ForceMode;
+        this.ForcePower = GameManagment.GameManager.Instance.GameSettings.ForcePower;
+        this.GearBox = GameManagment.GameManager.Instance.GameSettings.GearBox;
+        this.LimitRotations = GameManagment.GameManager.Instance.GameSettings.LimitRotation;
         GetWheels();
+        UpdateBodyDrag(0);
 
+
+    }
+    public void ShiftUp()
+    {
+        if (CurrentGear < GearBox.Length - 1)
+        {
+            CurrentGear++;
+        }
+
+        UpdateBodyDrag(CurrentGear);
+
+    }
+
+    private void UpdateBodyDrag(int CurrentGear)
+    {
+        rb.drag = GearBox[CurrentGear];
+    }
+    public void ShiftDown()
+    {
+        if (CurrentGear > 0)
+        {
+            CurrentGear--;
+        }
+        UpdateBodyDrag(CurrentGear);
 
     }
     private void LimitRotation()
     {
-
+        if (!LimitRotations)
+        {
+            return;
+        }
         var rot = transform.rotation;
         rot.x = Mathf.Clamp(rot.x, -MaxX, MaxX);
         rot.z = Mathf.Clamp(rot.z, -MaxZ, MaxZ);
@@ -136,8 +170,8 @@ public class CarController : MonoBehaviour
     {
 
         // Mesure current speed
-        speed = transform.InverseTransformDirection(rb.velocity).z * 3.6f;
-
+        //speed = transform.InverseTransformDirection(rb.velocity).z * 3.6f;
+        speed = rb.velocity.magnitude * 2.7f;
         if (handbrake)
         {
             foreach (WheelCollider wheel in wheels)
@@ -149,7 +183,6 @@ public class CarController : MonoBehaviour
         }
         else
         {
-
             foreach (WheelCollider wheel in wheels)
             {
                 wheel.motorTorque = 200f;
@@ -180,7 +213,7 @@ public class CarController : MonoBehaviour
             rb.AddForce(-transform.up * speed * Downforce);
         }
     }
-    
+
     public void ToogleHandbrake(bool h)
     {
         rb.drag = 2;
@@ -211,6 +244,14 @@ public class CarController : MonoBehaviour
     {
         transform.position = pos;
     }
+    public void FreezePositionY()
+    {
+   //  rb.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+    public void FreePositionY()
+    {
+        rb.constraints = RigidbodyConstraints.None;
+    }
 
     #endregion
 
@@ -220,7 +261,7 @@ public class CarController : MonoBehaviour
     {
         wheels = new List<WheelCollider>();
 
-        if (IsFrontWheelsDriving)
+       // if (IsFrontWheelsDriving)
         {
             Transform Wheels = transform.Find("FrontWheels");
 
@@ -228,7 +269,7 @@ public class CarController : MonoBehaviour
             wheels.Add(Wheels.GetChild(1).GetComponent<WheelCollider>());
         }
 
-        if (IsRearWheelsDriving)
+       // if (IsRearWheelsDriving)
         {
             Transform Wheels = transform.Find("RearWheels");
 
@@ -238,8 +279,19 @@ public class CarController : MonoBehaviour
 
         foreach (var wheel in wheels)
         {
+
             wheel.motorTorque = 0.0001f;
+            wheel.wheelDampingRate = GameManagment.GameManager.Instance.GameSettings.WheelDampingRate;
+            wheel.suspensionDistance = GameManagment.GameManager.Instance.GameSettings.SuspensionDistance;
+
+            var JointSpring = new JointSpring();
+            JointSpring.spring = GameManagment.GameManager.Instance.GameSettings.Spring;
+            JointSpring.damper = GameManagment.GameManager.Instance.GameSettings.Damper;
+            JointSpring.targetPosition = GameManagment.GameManager.Instance.GameSettings.TargetPosition;
+            wheel.suspensionSpring = JointSpring;
+
         }
+        rb.mass = GameManagment.GameManager.Instance.GameSettings.BodyMass;
 
     }
 

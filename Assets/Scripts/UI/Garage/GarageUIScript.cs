@@ -62,7 +62,7 @@ public class GarageUIScript : GlobalUIScript
 
         if (CarIndex < 0)
         {
-            CarIndex = GameManager.Instance.CarsData.CarsDataList.Count - 1;
+            CarIndex = GameManager.Instance.CarsData.FilteredCarsDataList.Count - 1;
         }
 
         UpdateGarageUIandGarage(CarIndex);
@@ -73,7 +73,7 @@ public class GarageUIScript : GlobalUIScript
     {
      
         // Moves to the next spawn point index. If it goes out of range, it wraps back to the start.
-        CarIndex = (CarIndex + 1) % GameManager.Instance.CarsData.CarsDataList.Count;
+        CarIndex = (CarIndex + 1) % GameManager.Instance.CarsData.FilteredCarsDataList.Count;
 
         UpdateGarageUIandGarage(CarIndex);
 
@@ -97,6 +97,7 @@ public class GarageUIScript : GlobalUIScript
         activeCar = CarsLoader.GetCar(carData.ID, carData.ID + "_" + carData.GetColorName());
         PlaceCar(activeCar.Model, CarPosition, CarRotation, CarsParent);
         activeCar.Model.SetActive(true);
+        activeCar.Model.GetComponent<SyncWheelsValues>().SyncValues();
 
     }
     private void UpdateGarageUIandGarage(int carIndex)

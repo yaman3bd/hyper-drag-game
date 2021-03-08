@@ -137,6 +137,21 @@ public static class UtilitiesScript
         }
         return null;
     }
+    public static T SafeDestroy<T>(T obj) where T : UnityEngine.Object
+    {
+        if (Application.isEditor)
+            UnityEngine.Object.DestroyImmediate(obj);
+        else
+            UnityEngine.Object.Destroy(obj);
+
+        return null;
+    }
+    public static T SafeDestroyGameObject<T>(T component) where T : UnityEngine.Object
+    {
+        if (component != null)
+            SafeDestroy(component);
+        return null;
+    }
 #if UNITY_EDITOR
     public static List<T> LoadAllPrefabsOfType<T>(string path) where T :UnityEngine.Object
     {

@@ -450,6 +450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 166897914020871508}
   - component: {fileID: 8370151769395734457}
+  - component: {fileID: 2616055468576050354}
   m_Layer: 0
   m_Name: c_3_Green
   m_TagString: Untagged
@@ -489,6 +490,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2616055468576050354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3750277053805580103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e445010a18ec65644b99696794bc4215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4640235260585808122
 GameObject:
   m_ObjectHideFlags: 0

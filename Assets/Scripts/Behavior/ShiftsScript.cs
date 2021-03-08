@@ -16,12 +16,19 @@ public enum ShiftState
 public class ShiftsScript : MonoBehaviour
 {
 
+    //Events
+    public delegate void OnShift(ShiftState shiftState, float shiftTime);
+    public event OnShift OnEpicShift;
+    public event OnShift OnTooCloseShift;
+    public event OnShift OnTooEarlyShift;
+    public event OnShift OnTooLateShift;
+
     public EffectsScript EffectsScript;
 
     [Header("Shifts")]
     public List<ShiftState> ComboShifts;
-   
-    
+
+
     [Header("Threshold")]
     public float EpicShiftThreshold;
     public float TooCloseShiftThreshold;
@@ -171,13 +178,13 @@ public class ShiftsScript : MonoBehaviour
 
     }
 
-    private void OnTooLateShift()
+    private void __OnTooLateShift()
     {
         ShiftStateText.DoText("Too Late");
         EffectsScript.StopEpicComboEffect();
     }
 
-    private void OnEpicShift()
+    private void _OnEpicShift()
     {
         ShiftStateText.DoText("Epic");
         if (ComboShifts.Count == 3)
@@ -192,12 +199,12 @@ public class ShiftsScript : MonoBehaviour
         }
     }
 
-    private void OnTooCloseShift()
+    private void _OnTooCloseShift()
     {
         ShiftStateText.DoText("Too Close");
     }
 
-    private void OnTooEarlyShift()
+    private void _OnTooEarlyShift()
     {
         ShiftStateText.DoText("Too Early");
         EffectsScript.StopEpicEffect();
@@ -220,15 +227,21 @@ public class ShiftsScript : MonoBehaviour
                     ComboShifts.RemoveRange(0, i);
 
                 }
-
-                OnTooLateShift();
+                if (OnTooLateShift != null)
+                {
+                    OnTooLateShift(ShiftState.TooLate, GetShiftTime());
+                }
+                __OnTooLateShift();
 
                 break;
             case ShiftState.Epic:
 
                 ComboShifts.Add(ShiftState.Epic);
-
-                OnEpicShift();
+                if (OnEpicShift != null)
+                {
+                    OnEpicShift(ShiftState.Epic, GetShiftTime());
+                }
+                _OnEpicShift();
 
                 break;
             case ShiftState.TooClose:
@@ -236,7 +249,12 @@ public class ShiftsScript : MonoBehaviour
                 if (ComboShifts.Count > 0)
                     ComboShifts.RemoveAt(ComboShifts.Count - 1);
 
-                OnTooCloseShift();
+                if (OnTooCloseShift != null)
+                {
+                    OnTooCloseShift(ShiftState.TooClose, GetShiftTime());
+                }
+
+                _OnTooCloseShift();
 
                 break;
             case ShiftState.TooEarly:
@@ -244,7 +262,12 @@ public class ShiftsScript : MonoBehaviour
                 if (ComboShifts.Count > 0)
                     ComboShifts.Clear();
 
-                OnTooEarlyShift();
+                if (OnTooEarlyShift != null)
+                {
+                    OnTooEarlyShift(ShiftState.TooEarly, GetShiftTime());
+                }
+
+                _OnTooEarlyShift();
 
                 break;
             default:

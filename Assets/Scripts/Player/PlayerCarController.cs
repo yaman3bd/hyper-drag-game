@@ -8,6 +8,7 @@ using UnityEngine.UI.Extensions;
 [RequireComponent(typeof(ShiftsScript))]
 public class PlayerCarController : MonoBehaviour
 {
+    public float DistancTravled;
 
     public CarController PCarController;
     // Private variables set at the start
@@ -31,6 +32,25 @@ public class PlayerCarController : MonoBehaviour
         LoadedLevelManager.Instance.OnRaceStarted += OnRaceStarted;
         LoadedLevelManager.Instance.OnRaceEnded += OnRaceEnded;
 
+        shiftsScript.OnEpicShift += OnEpicShift;
+        shiftsScript.OnTooLateShift += OnTooLateShift;
+        shiftsScript.OnTooEarlyShift += OnTooEarlyShift;
+
+    }
+
+    private void OnTooEarlyShift(ShiftState shiftState, float shiftTime)
+    {
+        PCarController.ShiftDown();
+    }
+
+    private void OnTooLateShift(ShiftState shiftState, float shiftTime)
+    {
+        PCarController.ShiftDown();
+    }
+
+    private void OnEpicShift(ShiftState shiftState, float shiftTime)
+    {
+        PCarController.ShiftUp();
     }
 
     private void OnRaceEnded()
@@ -45,6 +65,7 @@ public class PlayerCarController : MonoBehaviour
     private void OnRaceStarted()
     {
         LoadedLevelManager.Instance.OnRaceStarted -= OnRaceStarted;
+        PCarController.FreePositionY();
 
         IsRaceStarted = true;
     }
@@ -53,6 +74,7 @@ public class PlayerCarController : MonoBehaviour
     {
 
         shiftsScript.HandleShiftSlider();
+        DistancTravled = transform.position.z;
 
 
         if (Input.GetMouseButtonDown(0) && IsRaceStarted)
@@ -65,10 +87,7 @@ public class PlayerCarController : MonoBehaviour
             var gears = UpdateDiffGearing();
             PCarController.Drive(acc, gears);
         }
-        if (!IsRaceStarted && transform.position.y >= 5)
-        {
-            Debug.Break();
-        }
+       
     }
 
     private float UpdateDiffGearing()
@@ -81,7 +100,10 @@ public class PlayerCarController : MonoBehaviour
     }
     public void SetCarToPosition(Vector3 pos)
     {
+        
         PCarController.SetCarToPosition(pos);
+        PCarController.FreezePositionY();
+
     }
 }
 

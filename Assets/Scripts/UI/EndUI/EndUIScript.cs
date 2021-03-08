@@ -15,12 +15,12 @@ public class EndUIScript : GlobalUIScript
     public RectTransform EndStateTextLeftRect;
     public RectTransform EndStateTextRightRect;
     public RectTransform EndStateTextOverlayRect;
-   
+
     [Header("Texts Targets")]
     public RectTransform EndStateTextLeftStartTargetRect;
     public RectTransform EndStateTextRightStartTargetRect;
     public RectTransform TextsEndTargetRect;
-    
+
     [Header("Texts Elements")]
     public TMP_Text EndStateTextLeft;
     public TMP_Text EndStateTextRight;
@@ -55,7 +55,7 @@ public class EndUIScript : GlobalUIScript
 
     private void ReplayButton_OnClick()
     {
-     GameManager.Instance.ScenesManager.LoadScene("InGame");
+        GameManager.Instance.ScenesManager.LoadScene("InGame");
     }
 
     private void GarageButton_OnClick()
@@ -109,19 +109,19 @@ public class EndUIScript : GlobalUIScript
         EndStateTextOverlay.text = winnerText;
     }
 
-   
+
 
     private void Animation()
     {
         InitTexts(LoadedLevelManager.Instance.DidWin);
 
         StartCoroutine(TextFadeInOutAnimation());
- 
+
         Sequence seq = DOTween.Sequence();
-       
+
         seq.AppendCallback(() =>
         {
-            
+
             Background.DOFade(0.8f, BackgroundFadeDuration);
 
             EndStateTextLeftRect.DOAnchorPos(TextsEndTargetRect.anchoredPosition, LeftRightTextsMoveDuration);
@@ -129,7 +129,7 @@ public class EndUIScript : GlobalUIScript
 
         }).AppendCallback(() =>
         {
-        
+
             EndStateTextRightRect.DOAnchorPos(TextsEndTargetRect.anchoredPosition, LeftRightTextsMoveDuration);
             EndStateTextRight.DOFade(1, LeftRightTextsFadeDuration);
 
@@ -146,6 +146,11 @@ public class EndUIScript : GlobalUIScript
     public override void Show()
     {
         base.Show();
+
+        GameManager.Instance.BackButton.BackButtonCallBack = () =>
+        {
+            GarageButton_OnClick();
+        };
         Animation();
         SetText();
     }
@@ -156,19 +161,19 @@ public class EndUIScript : GlobalUIScript
         {
 
         }
-      //  if (TempSavedDataSettings.IsNewBestTime(, true))
+        if (TempSavedDataSettings.IsNewBestTime(time, true))
         {
             NewScoreText.text = "NEW SCORE";
             EpicPlayedText.text = "EPIC PLAYED";
         }
-       // else
+        else
         {
             NewScoreText.text = "NO NEW SCORE";
             EpicPlayedText.text = "NOT EPIC PLAYED";
         }
         BestTimeText.text = "BEST TIME: " + TempSavedDataSettings.GetBestTime().ToString();
         TimeText.text = TimeText.text = "Time: " + ((int)LoadedLevelManager.Instance.PlayerRaceTime).ToString();
-      
+
     }
 
 }

@@ -7,6 +7,7 @@ using System;
 [CreateAssetMenu(fileName = "NewCarData", menuName = "ScriptableObjects/Cars/Car Data")]
 public class CarDataScriptableObject : ScriptableObject
 {
+    public bool IsAvailable;
     public string Name;
     public string ID;
     public string ClassName;

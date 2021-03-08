@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978782be9ddb0f4a81c40f294d97460, type: 3}
   m_Name: c_10
   m_EditorClassIdentifier: 
+  IsAvailable: 0
   Name: Sirius
   ID: c_10
   ClassName: B Class

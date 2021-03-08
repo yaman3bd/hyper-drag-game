@@ -205,6 +205,49 @@ MonoBehaviour:
     VerticalAxis: 3
     HorizontalAxis: 0
     AllAxises: 0
+--- !u!1 &354640780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 354640782}
+  - component: {fileID: 354640781}
+  m_Layer: 0
+  m_Name: BackButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &354640781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354640780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da0f7a70a19367a468b1710b3dc1cd40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &354640782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354640780}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 364924055}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &362471600
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,8 +343,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc4a148e12a8db4ba086b931333f228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DefaultCarID: c_1
+  GameSettings: {fileID: 11400000, guid: e85f2fd75aa246f45a68f1ba4492a7fb, type: 2}
+  BackButton: {fileID: 354640781}
   CarsData: {fileID: 11400000, guid: db792b4a59ffecc45a644396aabf963b, type: 2}
-  CarsIds: {fileID: 0}
   PlayerEpicShiftsValues: {fileID: 11400000, guid: 9ab58928848908b47b52adb5d5d6922a,
     type: 2}
   AIEpicShiftsValues: {fileID: 11400000, guid: 42bc91ad64d604c428fdfef43e99a2e3, type: 2}
@@ -318,6 +363,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 434106493}
+  - {fileID: 354640782}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2039,7 +2085,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00030517578, y: 0}
+  m_AnchoredPosition: {x: 179.89435, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2311854490392662759
@@ -2283,7 +2329,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2311854491205333345}
   m_HandleRect: {fileID: 2311854491205333347}
   m_Direction: 0
-  m_Value: 0.50000256
+  m_Value: -1.0014534
   m_Size: 0.8307719
   m_NumberOfSteps: 0
   m_OnValueChanged:

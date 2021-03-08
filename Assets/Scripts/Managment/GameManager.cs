@@ -6,8 +6,10 @@ namespace GameManagment
 {
     public class GameManager : Singleton<GameManager>
     {
+        public string DefaultCarID;
+        public GameSettings GameSettings;
+        public BackButtonScript BackButton;
         public CarsScriptableObject CarsData;
-        public CarsIDsScriptableObject CarsIds;
         public EpicShiftValuesScriptableObject PlayerEpicShiftsValues;
         public EpicShiftValuesScriptableObject AIEpicShiftsValues;
         public ScenesManager ScenesManager;
@@ -24,6 +26,12 @@ namespace GameManagment
             {
                 return this.CarsData.GetCarByID(TempSavedDataSettings.GetCarID());
             }
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            CarsData.Filter();
         }
     }
 }

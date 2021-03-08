@@ -38,3 +38,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fec2446326129314f8832bd8a9cfe63f, type: 2}
   - {fileID: 11400000, guid: 191c453e9e7a99742a9703e29f3fc4b9, type: 2}
   - {fileID: 11400000, guid: 42d2b17406b68b1418a62f431c1bc0a0, type: 2}
+  FilteredCarsDataList:
+  - {fileID: 11400000, guid: 68e2d1a9161585e41bf24c6b42d6adc3, type: 2}
+  - {fileID: 11400000, guid: 12e9c143d2f0ba144addcbd831a8878f, type: 2}
+  - {fileID: 11400000, guid: 7a29544d9758bcf4dba8ef370ba57f52, type: 2}

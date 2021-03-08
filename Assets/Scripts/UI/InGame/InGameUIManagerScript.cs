@@ -46,6 +46,9 @@ public class InGameUIManagerScript : GlobalUIScript
     public float SpeedTextMoveDuration;
     public float ShiftStateTextMoveDuration;
     public float InGameUIElementsCanvasGroupFadeDuration;
+    [Header("Progress")]
+    public Slider PlayerProgress;
+    public Slider AIProgress;
 
     private bool RaceStarted;
     private void Awake()
@@ -105,6 +108,11 @@ public class InGameUIManagerScript : GlobalUIScript
 
     private void ReloadButton_OnClikc()
     {
+        if (!RaceStarted)
+        {
+            return;
+        }
+       
         GameManager.Instance.ScenesManager.LoadScene("InGame");
     }
 
@@ -115,8 +123,7 @@ public class InGameUIManagerScript : GlobalUIScript
         InitAnimation();
         StartAnimation();
     }
- 
-    private void OnRaceStarted()
+     private void OnRaceStarted()
     {
         LoadedLevelManager.Instance.OnRaceStarted -= OnRaceStarted;
         if (!TempSavedDataSettings.IsTutorialPlayed())
@@ -133,8 +140,21 @@ public class InGameUIManagerScript : GlobalUIScript
         }
     }
 
+    private void Progress()
+    {
+
+        // float playerProgress = LoadedLevelManager.Instance.Player.DistancTravled / LoadedLevelManager.Instance.EndLine.transform.position.z;
+        // float aiProgress = LoadedLevelManager.Instance.AI.DistancTravled / LoadedLevelManager.Instance.EndLine.transform.position.z;
+        float playerProgress = 0;
+        float aiProgress = 0;
+
+        PlayerProgress.value = playerProgress;
+        AIProgress.value = aiProgress;
+
+    }
     private void Update()
     {
+        Progress();
         TimeText.text = "Time: " + ((int)LoadedLevelManager.Instance.PlayerRaceTime).ToString();
     }
 }

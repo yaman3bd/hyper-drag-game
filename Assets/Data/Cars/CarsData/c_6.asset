@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978782be9ddb0f4a81c40f294d97460, type: 3}
   m_Name: c_6
   m_EditorClassIdentifier: 
+  IsAvailable: 0
   Name: Carinae
   ID: c_6
   ClassName: B Class
