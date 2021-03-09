@@ -71,15 +71,17 @@ public class UIBottomButtonsUIScript : MonoBehaviour
         {
             MainUIButton_OnClick();
         };
+        GarageUI.Show();
         UIMenuItemAnimation(GarageUI.UIRect, GarageUIButtonRect);
     }
 
-    private void MainUIButton_OnClick()
+    public void MainUIButton_OnClick()
     {
         GameManager.Instance.BackButton.BackButtonCallBack = () =>
         {
             Application.Quit();
-        }; 
+        };
+        GarageUI.HideCarCustomization();
         UIMenuItemAnimation(MainMenuUI.UIRect, MainUIButtonRect);
     }
 
@@ -99,7 +101,9 @@ public class UIBottomButtonsUIScript : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
+        SetWidthToMainUILayoutElement();
         var pos = MenusScroll.ScrollToCenter(GarageUI.UIRect, RectTransform.Axis.Horizontal);
+      
         MenusScroll.horizontalNormalizedPosition = pos;
     }
 

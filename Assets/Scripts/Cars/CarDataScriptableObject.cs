@@ -14,6 +14,8 @@ public class CarDataScriptableObject : ScriptableObject
     public int Price;
     public int Rank;
     public List<string> ColorsNames;
+    public List<Color> Colors;
+
     public string DefaultColorsName;
     public string GetRankName()
     {

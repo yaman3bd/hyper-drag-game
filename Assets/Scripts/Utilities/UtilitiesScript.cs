@@ -104,6 +104,13 @@ public static class UtilitiesScript
             return scrollPos;
         }
     }
+    public static void SetAllZero(this RectTransform rt)
+    {
+        SetLeft(rt, 0);
+        SetRight(rt, 0);
+        SetTop(rt, 0);
+        SetBottom(rt, 0);
+    }
     public static void SetLeft(this RectTransform rt, float left)
     {
         rt.offsetMin = new Vector2(left, rt.offsetMin.y);

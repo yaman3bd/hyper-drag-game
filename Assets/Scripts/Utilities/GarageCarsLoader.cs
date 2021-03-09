@@ -27,12 +27,12 @@ public class GarageCarsLoader : MonoBehaviour
     public GarageCarData GetCar(string id, string fullName, bool isActive = false)
     {
 
-        if (!GarageCars.ContainsKey(id))
+        if (!GarageCars.ContainsKey(id+"_"+fullName))
         {
             LoadCar(id, fullName, isActive);
         }
 
-        return GarageCars[id];
+        return GarageCars[id + "_" + fullName];
 
     }
     private void LoadCar(string id, string fullName, bool isActive)
@@ -45,7 +45,7 @@ public class GarageCarsLoader : MonoBehaviour
         GameObject car = Instantiate(Resources.Load<GameObject>(CarsResourcesPath + id + "/" + fullName));
         car.SetActive(isActive);
         garageCar.Model = car;
-        GarageCars.Add(id, garageCar);
+        GarageCars.Add(id + "_" + fullName, garageCar);
     }
 
 }

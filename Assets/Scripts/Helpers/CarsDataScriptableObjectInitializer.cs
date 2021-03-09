@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System;
-
+#if UNITY_EDITOR
 public class CarsDataScriptableObjectInitializer : MonoBehaviour
 {
     private string[] chars = { "a", "b", "r", "s", "x" };
@@ -42,7 +42,6 @@ public class CarsDataScriptableObjectInitializer : MonoBehaviour
 
                     DirectoryInfo dirs = new DirectoryInfo(path);
                     FileInfo[] infos = dirs.GetFiles("*.*");
-                    int index = 0;
                     car.ColorsNames = new List<string>();
 
                     foreach (var item in infos)
@@ -84,3 +83,4 @@ public class CarsDataScriptableObjectInitializer : MonoBehaviour
 
     }
 }
+#endif

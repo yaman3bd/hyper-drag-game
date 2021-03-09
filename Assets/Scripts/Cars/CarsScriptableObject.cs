@@ -25,6 +25,10 @@ public class CarsScriptableObject : ScriptableObject
         return GetCarByIndex(id);
 
     }
+    public int GetCarIndex(string id)
+    {
+        return FilteredCarsDataList.IndexOf(GetCarByID(id));
+    }
     public void Filter()
     {
         FilteredCarsDataList = CarsDataList.Where(c => c.IsAvailable).ToList();

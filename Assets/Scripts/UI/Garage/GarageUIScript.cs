@@ -7,6 +7,7 @@ using System;
 using GameManagment;
 public class GarageUIScript : GlobalUIScript
 {
+    public UIBottomButtonsUIScript UIBottomButtons;
     public GameObject MainUI;
     public RectTransform UIRect;
     public LayoutElement LayoutElement;
@@ -14,6 +15,8 @@ public class GarageUIScript : GlobalUIScript
     [Header("Cars")]
     public GarageCarsLoader CarsLoader;
     public Vector3 CarPosition;
+    public Vector3 CarPosition_AfterColor;
+
     public Vector3 CarRotation;
     public Transform CarsParent;
 
@@ -33,8 +36,20 @@ public class GarageUIScript : GlobalUIScript
     [Header("Car Specifications")]
     public Slider TopSpeedSlider;
     public Slider GearsSliders;
-
+    [Header("Colors")]
+    public GameObject ColorImageTemp;
+     
+    public RectTransform ColorImagesParent;
     public int CarIndex;
+    [Header("CarCustomization")]
+    public Button CustomizeCarButton;
+    public GameObject BuyButtons;
+    public GameObject CarCustomization;
+    public GameObject CarWheels;
+    public GameObject CarColors;
+    public Button CustomizeWheelsButton;
+    public Button CustomizeColorsButton;
+    public RectTransform CustomizeButtonMaskImg;
     public CarDataScriptableObject SelectedCarData;
     // Start is called before the first frame update
     void Start()
@@ -43,12 +58,57 @@ public class GarageUIScript : GlobalUIScript
         PrevCarButton.onClick.AddListener(PrevCarButton_OnClick);
         BuyCarButton.onClick.AddListener(BuyCarButton_OnClick);
         RaceButton.onClick.AddListener(PlayButton_OnClick);
+        CustomizeCarButton.onClick.AddListener(CustomizeCarButton_OnClick);
+
+        CustomizeColorsButton.onClick.AddListener(CustomizeColorsButton_OnClick);
+        CustomizeWheelsButton.onClick.AddListener(CustomizeWheelsButton_OnClick);
+
+    }
+
+    private void CustomizeCarButton_OnClick()
+    {
+        GameManager.Instance.BackButton.BackButtonCallBack = () =>
+        {
+            HideCarCustomization();
+        };
+
+        InitColors(SelectedCarData);
+        CarCustomization.SetActive(true);
+        BuyButtons.SetActive(false);
+    }
+
+    private void CustomizeWheelsButton_OnClick()
+    {
+        CustomizeButtonMaskImg.SetParent(CustomizeWheelsButton.transform);
+        CustomizeButtonMaskImg.SetAsFirstSibling();
+        CustomizeButtonMaskImg.SetAllZero();
+        CarWheels.SetActive(true);
+        CarColors.SetActive(false);
+    }
+
+    private void CustomizeColorsButton_OnClick()
+    {
+        CustomizeButtonMaskImg.SetParent(CustomizeColorsButton.transform);
+        CustomizeButtonMaskImg.SetAsFirstSibling();
+        CustomizeButtonMaskImg.SetAllZero();
+        CarWheels.SetActive(false);
+        CarColors.SetActive(true);
+    }
+    public void HideCarCustomization()
+    {
+        GameManager.Instance.BackButton.BackButtonCallBack = () =>
+        {
+            UIBottomButtons.MainUIButton_OnClick();
+        };
+        BuyButtons.SetActive(true);
+        CarCustomization.SetActive(false);
     }
     public override void Show()
     {
         base.Show();
-        CarIndex = -1;
-
+        CarIndex = GameManager.Instance.CarsData.GetCarIndex(SelectedCarData.ID);
+        CustomizeColorsButton_OnClick();
+        HideCarCustomization();
     }
     public override void Hide()
     {
@@ -57,7 +117,7 @@ public class GarageUIScript : GlobalUIScript
     GarageCarData activeCar;
     private void PrevCarButton_OnClick()
     {
-      
+
         CarIndex--;
 
         if (CarIndex < 0)
@@ -66,12 +126,12 @@ public class GarageUIScript : GlobalUIScript
         }
 
         UpdateGarageUIandGarage(CarIndex);
-       
+
     }
 
     private void NextCarButton_OnClick()
     {
-     
+
         // Moves to the next spawn point index. If it goes out of range, it wraps back to the start.
         CarIndex = (CarIndex + 1) % GameManager.Instance.CarsData.FilteredCarsDataList.Count;
 
@@ -86,7 +146,7 @@ public class GarageUIScript : GlobalUIScript
         TopSpeedSlider.value = UnityEngine.Random.Range(0.5f, 1.0f);
         GearsSliders.value = UnityEngine.Random.Range(0.5f, 1.0f);
     }
-    private void UpdateCar(CarDataScriptableObject carData)
+    private void UpdateCar(CarDataScriptableObject carData,Vector3 CarPosition)
     {
 
         if (activeCar != null)
@@ -101,28 +161,47 @@ public class GarageUIScript : GlobalUIScript
 
     }
     private void UpdateGarageUIandGarage(int carIndex)
-
     {
-       
+
         var carData = GameManager.Instance.CarsData.GetCarByIndex(carIndex);
-        
+        HideCarCustomization();
         UpdateUI(carData);
-        
-        UpdateCar(carData);
 
-        UpdateCarID(carData);
+        UpdateCar(carData, CarPosition);
 
+        UpdateCarID(carData);      
 
     }
+    private void InitColors(CarDataScriptableObject carData)
+    {
+        for (int i = 0; i < ColorImagesParent.childCount; i++)
+        {
+            Destroy(ColorImagesParent.GetChild(i).gameObject);
+        }
+        for (int i = 0; i < carData.ColorsNames.Count; i++)
+        {
+            var colorName = carData.ColorsNames[i];
+            var img = Instantiate(ColorImageTemp, ColorImagesParent);
+            var btn = img.gameObject.AddComponent<Button>();
+            int j = i;
+            btn.onClick.AddListener(() =>
+            {
+                TempSavedDataSettings.SaveCarColorName(carData.ID, carData.ColorsNames[j]);
+                UpdateCar(carData, CarPosition_AfterColor);
+            });
+            img.SetActive(true);
+            img.transform.GetChild(0).gameObject.GetComponent<Image>().color = carData.Colors[i];
+            img.name = colorName;
+        }
+    }
     private void UpdateGarageUIandGarage(string carID)
-
     {
 
         var carData = GameManager.Instance.CarsData.GetCarByID(carID);
 
         UpdateUI(carData);
 
-        UpdateCar(carData);
+        UpdateCar(carData, CarPosition);
 
         UpdateCarID(carData);
 
@@ -130,11 +209,10 @@ public class GarageUIScript : GlobalUIScript
     }
     private void PlaceCar(GameObject car, Vector3 postion, Vector3 rotation, Transform parent)
     {
-       
         car.transform.localPosition = postion;
         car.transform.localEulerAngles = rotation;
         car.transform.SetParent(parent);
-   
+
     }
     private void UpdateCarID(CarDataScriptableObject carData)
     {
@@ -152,8 +230,8 @@ public class GarageUIScript : GlobalUIScript
 
     private void BuyCarButton_OnClick()
     {
-     //   this.gameObject.SetActive(false);
-      //  MainUI.SetActive(true);
+        //   this.gameObject.SetActive(false);
+        //  MainUI.SetActive(true);
     }
     private void PlayButton_OnClick()
     {
