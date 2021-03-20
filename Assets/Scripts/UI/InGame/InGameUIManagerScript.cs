@@ -143,10 +143,8 @@ public class InGameUIManagerScript : GlobalUIScript
     private void Progress()
     {
 
-        // float playerProgress = LoadedLevelManager.Instance.Player.DistancTravled / LoadedLevelManager.Instance.EndLine.transform.position.z;
-        // float aiProgress = LoadedLevelManager.Instance.AI.DistancTravled / LoadedLevelManager.Instance.EndLine.transform.position.z;
-        float playerProgress = 0;
-        float aiProgress = 0;
+        float playerProgress = LoadedLevelManager.Instance.Player.DistancTravled / LoadedLevelManager.Instance.EndLine.transform.position.z;
+        float aiProgress = LoadedLevelManager.Instance.AI.DistancTravled / LoadedLevelManager.Instance.EndLine.transform.position.z;
 
         PlayerProgress.value = playerProgress;
         AIProgress.value = aiProgress;

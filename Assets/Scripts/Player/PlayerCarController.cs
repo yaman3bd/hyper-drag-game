@@ -80,6 +80,7 @@ public class PlayerCarController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && IsRaceStarted)
         {
             InGameUIManagerScript.Instance.HideTurtorialUI();
+            AudioManager.Instance.Play("ShiftGear");
             shiftsScript.ResetShiftSliderTime();
             shiftsScript.HandleShiftState();
             shiftsScript.UpdateEpicShiftValues();

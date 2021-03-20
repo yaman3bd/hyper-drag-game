@@ -12,7 +12,7 @@ public class LoadedLevelManager : MonoBehaviour
     public Action OnRaceEnded;
     public Action OnBeforeRaceStarted;
 
-    public EndLineScript EndLine;
+    public GameObject EndLine;
     [HideInInspector]
     public PlayerCarController Player;
     [HideInInspector] 
@@ -39,19 +39,18 @@ public class LoadedLevelManager : MonoBehaviour
         playerCarBody.transform.SetParent(playerCar.transform);
         playerCarBody.transform.position = Vector3.zero;
         playerCarBody.transform.SetAsFirstSibling();
-        
+
         Player = playerCar.AddComponent<PlayerCarController>();
         Player.PCarController = Player.GetComponent<CarController>();
-        Player.SetCarToPosition(Vector3.up);
+        Player.SetCarToPosition(new Vector3(0, 2, 10));
         Player.tag = "Player";
-        GameManager.Instance.ScenesManager.UpdateProgress(1f);
 
 
         var aiCarData = GameManager.Instance.CarsData.GetRandomCar();
         var carPath = "InGameCars/" + aiCarData.ID + "/" + aiCarData.ID;
         var aICar = Instantiate(Resources.Load<GameObject>(carPath));
 
-         var carBodyPath = "InGameCars/" + aiCarData.ID + "/Body/" + aiCarData.ID + "_body_" + aiCarData.GetColorName();
+        var carBodyPath = "InGameCars/" + aiCarData.ID + "/Body/" + aiCarData.ID + "_body_" + aiCarData.GetColorName();
 
         var aICarBody = Instantiate(Resources.Load<GameObject>(carBodyPath));
 
@@ -60,8 +59,9 @@ public class LoadedLevelManager : MonoBehaviour
         aICarBody.transform.SetAsFirstSibling();
         AI = aICar.AddComponent<AICarController>();
         AI.PCarController = AI.GetComponent<CarController>();
-        AI.SetCarToPosition(Vector3.up);
-     
+        AI.SetCarToPosition(new Vector3(0, 2, 10));
+        GameManager.Instance.ScenesManager.UpdateProgress(1f);
+
     }
     private void Start()
     {

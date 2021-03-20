@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978782be9ddb0f4a81c40f294d97460, type: 3}
   m_Name: c_23
   m_EditorClassIdentifier: 
-  IsAvailable: 0
+  IsAvailable: 1
   Name: Phobos
   ID: c_23
   ClassName: X Class
@@ -24,4 +24,5 @@ MonoBehaviour:
   - Purple
   - Red
   - Yellow
+  Colors: []
   DefaultColorsName: Purple
