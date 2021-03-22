@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e8c06d333fbe99a4b9db3a7e84e14bda, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2577,7 +2577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 2d13a7f4690af1d44ac46493bcaacd52, type: 2}
+  sharedProfile: {fileID: 0}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -3652,7 +3652,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 161.5, y: 0}
+  m_AnchoredPosition: {x: 0.000030517578, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2311854490392662759
@@ -3896,8 +3896,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2311854491205333345}
   m_HandleRect: {fileID: 2311854491205333347}
   m_Direction: 0
-  m_Value: -2.2840643
-  m_Size: 0.9102032
+  m_Value: 0.4999997
+  m_Size: 0.8515338
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5317,7 +5317,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 323
+  m_PreferredWidth: 345
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
@@ -6029,7 +6029,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 323
+  m_PreferredWidth: 345
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
@@ -7207,7 +7207,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 323
+  m_PreferredWidth: 345
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: 1
@@ -7599,7 +7599,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 40.5
+  m_fontSize: 44.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8115,7 +8115,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 323
+  m_PreferredWidth: 345
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1

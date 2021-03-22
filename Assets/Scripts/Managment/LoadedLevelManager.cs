@@ -49,6 +49,7 @@ public class LoadedLevelManager : MonoBehaviour
 
 
         var aiCarData = GameManager.Instance.CarsData.GetRandomCar();
+        
         var carPath = "InGameCars/" + aiCarData.ID + "/" + aiCarData.ID;
         var aICar = Instantiate(Resources.Load<GameObject>(carPath));
 
