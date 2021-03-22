@@ -11,6 +11,7 @@ public class Sound
     public float Volume;
     public float Pitch;
     public bool PlayOnAwake;
+    public bool Loop;
     [HideInInspector]
     public AudioSource Source;
 
@@ -35,6 +36,8 @@ public class AudioManager : MonoBehaviour
             s.volume = sound.Volume;
             s.pitch = sound.Pitch;
             s.playOnAwake = sound.PlayOnAwake;
+            s.loop = sound.Loop;
+
             sound.Source = s;
         }
     }

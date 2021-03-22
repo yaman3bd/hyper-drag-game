@@ -12,6 +12,8 @@ public class RoadGenerator : MonoBehaviour
     public int MaxWaveRaodsCount;
 
     public List<GameObject> Roads;
+    public List<GameObject> Props;
+
     public Vector3 StartPosition;
     public GameObject StraightRoad;
     public GameObject EndRoad;
@@ -27,6 +29,7 @@ public class RoadGenerator : MonoBehaviour
     public string path;
     private string[] chars = { "a", "b", "r", "s", "x" };
 
+#if UNITY_EDITOR
     public void SearchInAllPrefabs()
     {
 
@@ -96,6 +99,7 @@ public class RoadGenerator : MonoBehaviour
 
 
     }
+#endif
     private void Start()
     {
 
@@ -200,6 +204,19 @@ public class RoadGenerator : MonoBehaviour
             }
 
             PrevStraightRoad = CurrentStraightRoad;
+
+            if (currentLoop != 0 && (i == (straightRoadCount / 2)))
+            {
+                Props.Shuffle();
+
+                int j = UnityEngine.Random.Range(0, Props.Count);
+
+                var prop = Instantiate(Props[j], Vector3.zero, Quaternion.identity, parent);
+                var propPos = new Vector3(PrevStraightRoad.transform.position.x, PrevStraightRoad.transform.position.y + 1, PrevStraightRoad.transform.position.z);
+
+                prop.transform.position = propPos;
+
+            }
 
         }
     }

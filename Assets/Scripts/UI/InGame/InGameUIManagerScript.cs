@@ -126,6 +126,7 @@ public class InGameUIManagerScript : GlobalUIScript
      private void OnRaceStarted()
     {
         LoadedLevelManager.Instance.OnRaceStarted -= OnRaceStarted;
+
         if (!TempSavedDataSettings.IsTutorialPlayed())
         {
             TutorialUI.Show();

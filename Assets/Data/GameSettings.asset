@@ -20,6 +20,6 @@ MonoBehaviour:
   TargetPosition: 0.25
   BodyMass: 500
   ForceMode: 1
-  ForcePower: 1
+  ForcePower: 0.7
   GearBox:
   - 0

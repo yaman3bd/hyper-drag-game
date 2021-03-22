@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: Eridanus
   ID: c_3
   ClassName: A Class
+  TypesofCar: 2
   Price: 0
   Rank: 0
   ColorsNames:

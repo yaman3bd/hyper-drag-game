@@ -87,6 +87,7 @@ public class CarController : MonoBehaviour
         {
             rb.centerOfMass = centerOfMass.localPosition;
         }
+        LoadedLevelManager.Instance.OnRaceStarted += OnRaceStarted;
         this.ForceMode = GameManagment.GameManager.Instance.GameSettings.ForceMode;
         this.ForcePower = GameManagment.GameManager.Instance.GameSettings.ForcePower;
         this.GearBox = GameManagment.GameManager.Instance.GameSettings.GearBox;
@@ -96,6 +97,12 @@ public class CarController : MonoBehaviour
 
 
     }
+
+    private void OnRaceStarted()
+    {
+        rb.isKinematic = false;
+    }
+
     public void ShiftUp()
     {
         if (CurrentGear < GearBox.Length - 1)
@@ -185,7 +192,7 @@ public class CarController : MonoBehaviour
         {
             foreach (WheelCollider wheel in wheels)
             {
-                wheel.motorTorque = 200f;
+                wheel.motorTorque = GetWheelMotorTorque();
                 wheel.brakeTorque = 0;
             }
 
@@ -197,14 +204,6 @@ public class CarController : MonoBehaviour
                     // Don't zero out this value or the wheel completely lock up
                     wheel.motorTorque = 0.01f;
                     wheel.brakeTorque = GetBrakeForce();
-                }
-            }
-            else if (Mathf.Abs(speed) < 4)
-            {
-
-                foreach (WheelCollider wheel in wheels)
-                {
-                    wheel.motorTorque = GetWheelMotorTorque();
                 }
             }
 
@@ -242,6 +241,7 @@ public class CarController : MonoBehaviour
     }
     public void SetCarToPosition(Vector3 pos)
     {
+        rb.isKinematic = true;
         transform.position = pos;
     }
     public void FreezePositionY()

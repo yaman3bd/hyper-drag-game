@@ -81,7 +81,7 @@ public class UIBottomButtonsUIScript : MonoBehaviour
         {
             Application.Quit();
         };
-        GarageUI.HideCarCustomization();
+        //GarageUI.HideCarCustomization();
         UIMenuItemAnimation(MainMenuUI.UIRect, MainUIButtonRect);
     }
 

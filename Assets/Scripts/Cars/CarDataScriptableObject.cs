@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public enum TypesofCar
+{
+    Common,
+    Rare,
+    Epic,
+    Legendary
+}
 
 [CreateAssetMenu(fileName = "NewCarData", menuName = "ScriptableObjects/Cars/Car Data")]
 public class CarDataScriptableObject : ScriptableObject
@@ -11,6 +18,7 @@ public class CarDataScriptableObject : ScriptableObject
     public string Name;
     public string ID;
     public string ClassName;
+    public TypesofCar TypesofCar;
     public int Price;
     public int Rank;
     public List<string> ColorsNames;
@@ -19,9 +27,8 @@ public class CarDataScriptableObject : ScriptableObject
     public string DefaultColorsName;
     public string GetRankName()
     {
-        Debug.LogError("CarDataScriptableObject/GetRank/ Car Rank Not Set Yet!");
 
-        return "not set";
+        return TypesofCar.ToString();
     }
 
     public string GetColorName()
@@ -32,5 +39,10 @@ public class CarDataScriptableObject : ScriptableObject
             colorsName = DefaultColorsName;
         }
         return colorsName;
+    }
+    public string GetRandomColorName()
+    {
+        var colorName = UnityEngine.Random.Range(0, ColorsNames.Count);
+        return ColorsNames[colorName];
     }
 }

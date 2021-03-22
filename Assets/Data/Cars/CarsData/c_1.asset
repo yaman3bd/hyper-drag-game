@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: Columbia
   ID: c_1
   ClassName: A Class
+  TypesofCar: 1
   Price: 0
   Rank: 0
   ColorsNames:

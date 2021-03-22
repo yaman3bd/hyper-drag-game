@@ -800,7 +800,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 500
   m_Drag: 0
-  m_AngularDrag: 5
+  m_AngularDrag: 3
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -818,7 +818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36502b310f0b41a46971ade2bb073cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxX: 0.25
+  LimitRotations: 0
+  MaxX: 0.55
   MaxZ: 0.25
   RotationSpeed: 50
   ForceMode: 0

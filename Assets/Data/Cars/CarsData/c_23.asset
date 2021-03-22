@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: Phobos
   ID: c_23
   ClassName: X Class
+  TypesofCar: 3
   Price: 0
   Rank: 0
   ColorsNames:
@@ -24,5 +25,10 @@ MonoBehaviour:
   - Purple
   - Red
   - Yellow
-  Colors: []
+  Colors:
+  - {r: 0.1137255, g: 0.40000004, b: 0.85098046, a: 1}
+  - {r: 0.14509805, g: 0.72156864, b: 0.15294118, a: 1}
+  - {r: 0.47450984, g: 0.11764707, b: 0.69411767, a: 1}
+  - {r: 0.85098046, g: 0.16470589, b: 0.1764706, a: 1}
+  - {r: 0.82745105, g: 0.67058825, b: 0.14509805, a: 1}
   DefaultColorsName: Purple

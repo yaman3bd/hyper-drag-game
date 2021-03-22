@@ -72,9 +72,10 @@ public class GarageUIScript : GlobalUIScript
             HideCarCustomization();
         };
 
-        InitColors(SelectedCarData);
-        CarCustomization.SetActive(true);
-        BuyButtons.SetActive(false);
+        //CustomizeCarButton.gameObject.SetActive(false);
+        
+        //CarCustomization.SetActive(true);
+       // BuyButtons.SetActive(false);
     }
 
     private void CustomizeWheelsButton_OnClick()
@@ -100,15 +101,17 @@ public class GarageUIScript : GlobalUIScript
         {
             UIBottomButtons.MainUIButton_OnClick();
         };
-        BuyButtons.SetActive(true);
+        CustomizeCarButton.gameObject.SetActive(true);
+        //BuyButtons.SetActive(true);
         CarCustomization.SetActive(false);
     }
     public override void Show()
     {
         base.Show();
         CarIndex = GameManager.Instance.CarsData.GetCarIndex(SelectedCarData.ID);
-        CustomizeColorsButton_OnClick();
-        HideCarCustomization();
+        //CustomizeColorsButton_OnClick();
+        //HideCarCustomization();
+        InitColors(SelectedCarData);
     }
     public override void Hide()
     {
@@ -164,13 +167,15 @@ public class GarageUIScript : GlobalUIScript
     {
 
         var carData = GameManager.Instance.CarsData.GetCarByIndex(carIndex);
-        HideCarCustomization();
+        //HideCarCustomization();
+
+     
         UpdateUI(carData);
 
         UpdateCar(carData, CarPosition);
 
-        UpdateCarID(carData);      
-
+        UpdateCarID(carData);
+        InitColors(SelectedCarData);
     }
     private void InitColors(CarDataScriptableObject carData)
     {

@@ -27,6 +27,8 @@ public class LoadedLevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        AudioManager.Instance.Play("Backgroud");
+
         Instance = this;
         DidWin = false;
         GameManager.Instance.ScenesManager.UpdateProgress(0.75f);
@@ -42,7 +44,7 @@ public class LoadedLevelManager : MonoBehaviour
 
         Player = playerCar.AddComponent<PlayerCarController>();
         Player.PCarController = Player.GetComponent<CarController>();
-        Player.SetCarToPosition(new Vector3(0, 2, 10));
+        Player.SetCarToPosition(new Vector3(0, 0.1f, 10));
         Player.tag = "Player";
 
 
@@ -50,7 +52,7 @@ public class LoadedLevelManager : MonoBehaviour
         var carPath = "InGameCars/" + aiCarData.ID + "/" + aiCarData.ID;
         var aICar = Instantiate(Resources.Load<GameObject>(carPath));
 
-        var carBodyPath = "InGameCars/" + aiCarData.ID + "/Body/" + aiCarData.ID + "_body_" + aiCarData.GetColorName();
+        var carBodyPath = "InGameCars/" + aiCarData.ID + "/Body/" + aiCarData.ID + "_body_" + aiCarData.GetRandomColorName();
 
         var aICarBody = Instantiate(Resources.Load<GameObject>(carBodyPath));
 
@@ -59,7 +61,8 @@ public class LoadedLevelManager : MonoBehaviour
         aICarBody.transform.SetAsFirstSibling();
         AI = aICar.AddComponent<AICarController>();
         AI.PCarController = AI.GetComponent<CarController>();
-        AI.SetCarToPosition(new Vector3(0, 2, 10));
+        AI.SetCarToPosition(new Vector3(0, 0.1f, 10));
+       
         GameManager.Instance.ScenesManager.UpdateProgress(1f);
 
     }

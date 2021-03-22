@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: M78
   ID: c_4
   ClassName: A Class
+  Type: Common
   Price: 0
   Rank: 0
   ColorsNames:

@@ -469,6 +469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265921606909607623}
   - component: {fileID: 4265921606909607620}
+  - component: {fileID: 4861700804289228803}
   m_Layer: 0
   m_Name: RearLeftWheel
   m_TagString: Untagged
@@ -520,6 +521,21 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!114 &4861700804289228803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265921606909607622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8114c3aa91dc84bbd02e882fa64fdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cancelSteerAngle: 0
+  wheelModel: {fileID: 8822109267904558218}
+  localRotOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &4265921607412294791
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +546,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265921607412294788}
   - component: {fileID: 4265921607412294789}
+  - component: {fileID: 336486446969064128}
   m_Layer: 0
   m_Name: RearRightWheel
   m_TagString: Untagged
@@ -581,6 +598,21 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!114 &336486446969064128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265921607412294791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8114c3aa91dc84bbd02e882fa64fdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cancelSteerAngle: 0
+  wheelModel: {fileID: 3649812726676766135}
+  localRotOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &4265921608481465348
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,6 +623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265921608481465349}
   - component: {fileID: 4265921608481465346}
+  - component: {fileID: 1602958499331752171}
   m_Layer: 0
   m_Name: FrontLeftWheel
   m_TagString: Untagged
@@ -642,6 +675,21 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!114 &1602958499331752171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265921608481465348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8114c3aa91dc84bbd02e882fa64fdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cancelSteerAngle: 0
+  wheelModel: {fileID: 2056975405879200321}
+  localRotOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &4265921608811760226
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +700,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265921608811760227}
   - component: {fileID: 4265921608811760224}
+  - component: {fileID: 4087015580110164448}
   m_Layer: 0
   m_Name: FrontRightWheel
   m_TagString: Untagged
@@ -703,6 +752,21 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!114 &4087015580110164448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265921608811760226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8114c3aa91dc84bbd02e882fa64fdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cancelSteerAngle: 0
+  wheelModel: {fileID: 2148308494900244890}
+  localRotOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &4265921608918255732
 GameObject:
   m_ObjectHideFlags: 0
