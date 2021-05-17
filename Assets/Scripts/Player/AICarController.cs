@@ -26,6 +26,7 @@ public class AICarController : MonoBehaviour
     {
         DistancTravled = transform.position.z;
     }
+    private bool boosted;
     IEnumerator MyUpdate()
     {
         while (true)
@@ -35,34 +36,47 @@ public class AICarController : MonoBehaviour
             UpdateValues();
 
             var acc = Acceleration;
-            var gears = UpdateDiffGearing();
             float now = Time.timeSinceLevelLoad;
 
-            if (now > shiftDelay)
+            if (InGameUIManagerScript.Instance.Pointer.transform.rotation.z <= -0.4f && CanGear())
             {
                 PCarController.ShiftUp();
+                PCarController.Drive(acc);
                 shiftDelay = now + Random.Range(1f, 2f);
             }
-
-            PCarController.Drive(acc, gears);
+            if (!boosted && CanBoost())
+            {
+                boosted = true;
+                ActiveBoost();
+            }
             yield return new WaitForSeconds(TimeToWaitToDrive);
         }
     }
-
+    public bool CanGear()
+    {
+        return PCarController.CanGear();
+    }
+    public bool CanBoost()
+    {
+        return PCarController.CanBoost();
+    }
+    public void ActiveBoost()
+    {
+        PCarController.ActiveBoost();
+    }
+   
     void Start()
     {
-        PCarController.GetInitialXPos(-10);
+        PCarController.SetInitialXPos(-10);
 
         LoadedLevelManager.Instance.OnRaceStarted += OnRaceStarted;
 
-    }
+    } 
     private void OnRaceStarted()
     {
         LoadedLevelManager.Instance.OnRaceStarted -= OnRaceStarted;
 
-        PCarController.FreePositionY();
         min = max = 0.1f;
-        TimeToWaitToDrive = 0.8f;
 
         UpdateValues();
 
@@ -70,6 +84,7 @@ public class AICarController : MonoBehaviour
     }
     private void UpdateValues()
     {
+        TimeToWaitToDrive = Random.Range(1f, 1.2f);
         EpicShiftsValues.UpdateEpicShiftTimeValue();
 
         Acceleration = GetNewEpicTime();
@@ -78,13 +93,6 @@ public class AICarController : MonoBehaviour
     {
         var epicTime = EpicShiftsValues.GetEpicShiftTimeValue();
         return Random.Range(epicTime - min, epicTime + max);
-    }
-
-    private float UpdateDiffGearing()
-    {
-        var epicTime = EpicShiftsValues.GetEpicShiftTimeValue();
-
-        return Acceleration.Remap(epicTime - min, epicTime + max, PCarController.diffGearingss[0], PCarController.diffGearingss[1]);
     }
     
     public void ToogleHandbrake(bool val)
@@ -95,6 +103,5 @@ public class AICarController : MonoBehaviour
     public void SetCarToPosition(Vector3 pos)
     {
         PCarController.SetCarToPosition(pos);
-        PCarController.FreezePositionY();
     }
 }

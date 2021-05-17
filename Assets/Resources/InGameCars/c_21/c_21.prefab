@@ -207,54 +207,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36502b310f0b41a46971ade2bb073cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentGear: 0
+  LimitRotations: 0
   MaxX: 0.25
   MaxZ: 0.25
   RotationSpeed: 50
   ForceMode: 0
   ForcePower: 0
-  IsFrontWheelsDriving: 0
-  IsRearWheelsDriving: 1
-  MotorTorque:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 200
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 50
-      value: 300
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 200
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  diffGearingss:
-  - 2
-  - 20
-  BrakeForce: 30000
   Downforce: 10
   isGrounded: 0
+  MaxBoostTime: 0
+  BoostTime: 0
+  BoostRegen: 0
+  BoostForce: 0
   centerOfMass: {fileID: 1527472787120988629}
-  speed: 0
+  kph: 0
+  InitialXPos: 0
+  WheelsDriveType: 0
 --- !u!114 &3215933796727081105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,13 +237,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EffectsScript: {fileID: 2815608839504174207}
+  Gerars: {fileID: 0}
+  RotationSpeed: 0
+  ForwardSpeed: 1
+  BackwardSpeed: 10
+  RotationLimit: -0.91
+  InitRotationLimit: 0
+  axis: -1
   ComboShifts: 
   EpicShiftThreshold: 0.1
   TooCloseShiftThreshold: 0.15
-  ShiftSliderSpeed: 1
-  MaxTime: 0.5
-  MinTime: 1
-  TimeThreshold: 0.01
+  TooEarlyShiftThreshold: -0.57
 --- !u!114 &2815608839504174207
 MonoBehaviour:
   m_ObjectHideFlags: 0

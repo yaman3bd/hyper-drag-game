@@ -4,14 +4,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
-
+using DG.Tweening;
 public class CameraFollow : MonoBehaviour
 {
  	// Should the camera follow the target
 	[SerializeField] bool follow = false;
 	public bool Rotate;
 	public bool Rotate1;
-
+	public float minY;
 	public bool Follow { get { return follow; } set { follow = value; } }
 
 	// Current target
@@ -27,16 +27,19 @@ public class CameraFollow : MonoBehaviour
 	[SerializeField] float lerpPositionMultiplier = 1f;
 	[Range(0, 10)]
 	[SerializeField] float lerpRotationMultiplier = 1f;
+	[Range(0, 10)]
+	[SerializeField] float lerpPositionMultiplierNew = 1f;
+	[Range(0, 10)]
+	[SerializeField] float lerpRotationMultiplierNew = 1f;
 
 	// Speedometer
-	[SerializeField] TMP_Text speedometer;
 
 
 	CarController vehicle;
 
 	void Start()
 	{
-		//LoadedLevelManager.Instance.OnRaceEnded += OnRaceStarted;
+		LoadedLevelManager.Instance.OnRaceStarted += OnRaceStarted;
 		target = GameObject.FindObjectOfType<PlayerCarController>().transform;
 		vehicle = target.GetComponent<CarController>();
 		if (vehicle != null)
@@ -48,11 +51,49 @@ public class CameraFollow : MonoBehaviour
 	private void OnRaceStarted()
 	{
 		LoadedLevelManager.Instance.OnRaceEnded -= OnRaceStarted;
-		 
 		
-	}
+		offset = new Vector3(8.41f, 8.0f, -11);
+		offse1t = new Vector3(1, -3f, 0);
 
-	void FixedUpdate()
+		DOTween.To(() => lerpPositionMultiplier, x => lerpPositionMultiplierNew = x, 10, 1f);
+		DOTween.To(() => lerpRotationMultiplier, x => lerpRotationMultiplier = x, 10, 1f);
+
+	}
+	public void SwitchView(bool raceStart)
+	{
+		if (raceStart)
+		{
+
+			offset = new Vector3(8.41f, 8.0f, -11);
+			offse1t = new Vector3(1, -3f, 0);
+			DOTween.To(() => lerpPositionMultiplier, x => lerpPositionMultiplierNew = x, 10, 0.5f);
+			DOTween.To(() => lerpRotationMultiplier, x => lerpRotationMultiplier = x, 10, 0.5f);
+
+			//lerpPositionMultiplier = lerpPositionMultiplierNew;
+			//lerpRotationMultiplier = lerpRotationMultiplierNew;
+        }
+        else
+        {
+			offset = new Vector3(14.1f, 11.45f, 0);
+			offse1t = new Vector3(0, -6, 0);
+			lerpPositionMultiplier = 5;
+			lerpRotationMultiplier = 3;
+		}
+	}
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+			SwitchView(true);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+			SwitchView(false);
+
+		}
+    }
+
+    void FixedUpdate()
 	{
 		// If we don't follow or target is null return
 		if (!follow || target == null) return;
@@ -62,7 +103,7 @@ public class CameraFollow : MonoBehaviour
 
 		// Save transform localy
 		Quaternion curRot = transform.rotation;
-		Vector3 tPos = target.position + target.TransformDirection(offset);
+		  var tPos = target.position + target.TransformDirection(offset);
 
 		// Look at the target
 		if (Rotate)
@@ -83,11 +124,9 @@ public class CameraFollow : MonoBehaviour
 		}
 
 		// Keep the camera above the target y position
-		if (tPos.y < target.position.y)
+		if (tPos.y < minY)
 		{
-
-			tPos.y = target.position.y;
-
+			tPos.y = minY;
 		}
 
 		// Set transform with lerp
@@ -101,19 +140,7 @@ public class CameraFollow : MonoBehaviour
 		//	transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
 		//}
 
-		// Update speedometer
-		if (speedometer != null && vehicle != null)
-		{
-			StringBuilder sb = new StringBuilder();
-			sb.Append(((int)(vehicle.Speed)).ToString());
-			sb.Append(" Kph");
-
-			speedometer.text = sb.ToString();
-		}
-		else if (speedometer.text != "")
-		{
-			speedometer.text = "";
-		}
+		
 
 	}
 }

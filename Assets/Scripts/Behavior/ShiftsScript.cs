@@ -13,6 +13,12 @@ public enum ShiftState
     TooEarly
 
 }
+[System.Serializable]
+public class Shifts
+{
+    public string name;
+    public float value;
+}
 public class ShiftsScript : MonoBehaviour
 {
 
@@ -24,38 +30,49 @@ public class ShiftsScript : MonoBehaviour
     public event OnShift OnTooLateShift;
 
     public EffectsScript EffectsScript;
+    [Header("New Move")]
+    public Text Gerars;
+    [SerializeField]
+    private float RotationSpeed;
+    [SerializeField]
+    private float ForwardSpeed;
+    [SerializeField]
+    private float BackwardSpeed;
+
+    [SerializeField]
+    private float RotationLimit;
+    [SerializeField]
+    private float InitRotationLimit;
+
+
+    public GameObject Pointer
+    {
+        get
+        {
+            return InGameUIManagerScript.Instance.Pointer;
+        }
+        set
+        {
+            InGameUIManagerScript.Instance.Pointer = value;
+        }
+    }
+
+
+    public float axis;
 
     [Header("Shifts")]
     public List<ShiftState> ComboShifts;
 
 
     [Header("Threshold")]
-    public float EpicShiftThreshold;
-    public float TooCloseShiftThreshold;
+    public float EpicShiftThreshold = -0.91f;
+    public float TooCloseShiftThreshold=-0.84f;
+    public float TooEarlyShiftThreshold=-0.57f;
+    public float SlowRatio = -0.57f;
 
 
-    public Slider ShiftSlider
-    {
-        get
-        {
-            return InGameUIManagerScript.Instance.ShiftSlider;
-        }
-        set
-        {
-            InGameUIManagerScript.Instance.ShiftSlider = value;
-        }
-    }
-    public Gradient2 ShiftSliderBackground
-    {
-        get
-        {
-            return InGameUIManagerScript.Instance.ShiftSliderBackground;
-        }
-        set
-        {
-            InGameUIManagerScript.Instance.ShiftSliderBackground = value;
-        }
-    }
+   
+   
 
     public TextAnimation ShiftStateText
     {
@@ -70,106 +87,100 @@ public class ShiftsScript : MonoBehaviour
     }
 
     [Header("Shift Slider Values")]
-    public float ShiftSliderSpeed;
-    public float MaxTime;
-    public float MinTime;
-    public float TimeThreshold;
-
-    private bool IsSliderIncrease;
-    private bool IsSliderDecrease;
-
-    private float CurrentSpeed;
-    private float EpicShiftTime;
-
-    private EpicShiftValuesScriptableObject EpicShiftsValues;
+     private float EpicShiftTime;
 
     private void Start()
     {
-        EpicShiftsValues = GameManagment.GameManager.Instance.PlayerEpicShiftsValues;
+        RotationSpeed = GameManagment.GameManager.Instance.GameSettings.RotationSpeed;
+        ForwardSpeed = GameManagment.GameManager.Instance.GameSettings.ForwardSpeed;
+        BackwardSpeed = GameManagment.GameManager.Instance.GameSettings.BackwardSpeed;
+        InitRotationLimit = GameManagment.GameManager.Instance.GameSettings.RotationLimit;
+        EpicShiftThreshold = GameManagment.GameManager.Instance.GameSettings.EpicShiftThreshold;
+        TooCloseShiftThreshold  = GameManagment.GameManager.Instance.GameSettings.TooCloseShiftThreshold;
+        TooEarlyShiftThreshold = GameManagment.GameManager.Instance.GameSettings.TooEarlyShiftThreshold;
+        SlowRatio = GameManagment.GameManager.Instance.GameSettings.SlowRatio;
+      
+        RotationLimit = InitRotationLimit;
+        SlowPointerSpeed = true;
     }
-    private void SpeedUp()
-    {
-        if (MaxTime >= MinTime)
-            MaxTime -= TimeThreshold * Time.deltaTime;
-    }
+    private bool SlowPointerSpeed;
+
+    public bool CanGear;
+
+
     public void HandleShiftSlider()
     {
-        ShiftSlider.value = CurrentSpeed / MaxTime;
-
-        if (ShiftSlider.value <= ShiftSlider.minValue)
+        var rot = Pointer.transform.rotation;
+        if (SlowPointerSpeed && LoadedLevelManager.Instance.Player.CanGear())
         {
-            IsSliderIncrease = true;
-            IsSliderDecrease = false;
+            RotationSpeed -= SlowRatio * Time.deltaTime;
         }
-        else if (ShiftSlider.value >= ShiftSlider.maxValue)
+        rot.z += axis * RotationSpeed * Time.deltaTime;
+        rot.z = Mathf.Clamp(rot.z, -RotationLimit, RotationLimit);
+
+
+        if (rot.z >= InitRotationLimit)
         {
-            IsSliderIncrease = false;
-            IsSliderDecrease = true;
-        }
+            axis = -1;
+            RotationSpeed = ForwardSpeed;
+            SlowPointerSpeed = true;
 
-        if (IsSliderIncrease)
+        }
+        if (rot.z <= -InitRotationLimit && LoadedLevelManager.Instance.Player.CanGear())
         {
-            CurrentSpeed += Time.deltaTime * ShiftSliderSpeed;
+            ResetShiftSliderTime();
         }
-        else if (IsSliderDecrease)
+
+        if (rot.z <= -0.4f)
         {
-            CurrentSpeed -= Time.deltaTime * ShiftSliderSpeed;
+            CanGear = true;
         }
-    }
+        else
+        {
+            CanGear = false;
+        }
 
-    public void UpdateEpicShiftValues()
-    {
+        Pointer.transform.rotation = rot;
 
-        UnityEngine.Gradient gradient = new UnityEngine.Gradient();
-        GradientColorKey[] gck = new GradientColorKey[4];
+        //var rot = Pointer.transform.rotation;
+        //rot.z += axis * RotationSpeed * Time.deltaTime;
+        //rot.z = Mathf.Clamp(rot.z, RotationLimit, 0);
 
-        Color col1;
-        ColorUtility.TryParseHtmlString("#16FF00", out col1);
+       
 
-        Color col2;
-        ColorUtility.TryParseHtmlString("#F2F400", out col2);
-        Color col3;
-        ColorUtility.TryParseHtmlString("#FF0000", out col3);
+        //if (Mathf.Abs(rot.z) >= Mathf.Abs(InitRotationLimit))
+        //{
 
-        gck[0].color = col1;
-        gck[1].color = col2;
-        gck[2].color = col3;
-        gck[3].color = col2;
+        //    RotationLimit = Random.Range(InitRotationLimit, -1f);
+        //}
+        //if (Mathf.Abs(rot.z) <= 0)
+        //{
+        //    RotationSpeed = ForwardSpeed;
+        //    axis = -1;
+        //}
+        //Pointer.transform.rotation = rot;
 
-        EpicShiftsValues.UpdateEpicShiftTimeValue();
-        EpicShiftTime = EpicShiftsValues.GetEpicShiftTimeValue();
-
-        gck[0].time = 0;
-        gck[1].time = 0.5f;
-        gck[2].time = EpicShiftTime;
-        gck[3].time = 0.8f;
-
-        gradient.SetKeys(gck, ShiftSliderBackground.EffectGradient.alphaKeys);
-        ShiftSliderBackground.EffectGradient = gradient;
-
+ 
+       
+ 
     }
 
     #region Shifts
 
-    public ShiftState GetShiftFromTime(float shiftTime)
+    public ShiftState GetShiftFromTime(float pointerRotation)
     {
-        //Epic
-        if (shiftTime.IsBetween(EpicShiftTime - EpicShiftThreshold, EpicShiftTime + EpicShiftThreshold))
+        var rot = pointerRotation;
+
+
+        if (rot.IsBetween(TooCloseShiftThreshold, EpicShiftThreshold))
         {
             return ShiftState.Epic;
         }
-        //TooClose
-        else if (shiftTime.IsBetween(EpicShiftTime - TooCloseShiftThreshold, EpicShiftTime + TooCloseShiftThreshold))
+        else if (rot.IsBetween(TooCloseShiftThreshold, TooEarlyShiftThreshold))
         {
             return ShiftState.TooClose;
         }
-        //Too Late
-        else if (shiftTime > (EpicShiftTime + EpicShiftThreshold + TooCloseShiftThreshold))
-        {
-            return ShiftState.TooLate;
-        }
-        //Too Early
-        else if (shiftTime < (EpicShiftTime - EpicShiftThreshold - TooCloseShiftThreshold))
+        else if (rot.IsBetween(0, Mathf.Abs(EpicShiftThreshold)))
         {
             return ShiftState.TooEarly;
         }
@@ -277,24 +288,20 @@ public class ShiftsScript : MonoBehaviour
 
     public float GetShiftTime()
     {
-        return ShiftSlider.value;
+        return Pointer.transform.rotation.z;
     }
 
-    public float GetMinShiftTime()
-    {
-        return ShiftSlider.minValue;
-    }
-
-    public float GetMaxShiftTime()
-    {
-        return ShiftSlider.maxValue;
-    }
 
     #endregion
 
     public void ResetShiftSliderTime()
     {
-        CurrentSpeed = 0;
+        SlowPointerSpeed = false;
+        ForwardSpeed = 1;
+        axis = 1;
+        RotationSpeed = BackwardSpeed;
+
+
     }
 
 }

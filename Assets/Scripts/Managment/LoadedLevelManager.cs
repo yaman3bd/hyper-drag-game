@@ -22,6 +22,7 @@ public class LoadedLevelManager : MonoBehaviour
     private bool ShouldUpdate;
     public CounterAnimation Counter;
 
+ 
 
     public float TimeToWaitToStartGame;
     // Start is called before the first frame update

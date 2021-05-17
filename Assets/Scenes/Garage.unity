@@ -647,7 +647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc4a148e12a8db4ba086b931333f228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultCarID: c_23
+  DefaultCarID: c_0
   GameSettings: {fileID: 11400000, guid: e85f2fd75aa246f45a68f1ba4492a7fb, type: 2}
   BackButton: {fileID: 354640781}
   CarsData: {fileID: 11400000, guid: db792b4a59ffecc45a644396aabf963b, type: 2}
@@ -3220,7 +3220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4351516903975130, guid: 35cba3a52a8a7c44baa038f403ea2be5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9757595
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4351516903975130, guid: 35cba3a52a8a7c44baa038f403ea2be5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3289,7 +3289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4114572299047716, guid: defe2fa889bd18f45b30aca5f815485a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9757595
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4114572299047716, guid: defe2fa889bd18f45b30aca5f815485a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3358,7 +3358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4351516903975130, guid: 35cba3a52a8a7c44baa038f403ea2be5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9757595
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4351516903975130, guid: 35cba3a52a8a7c44baa038f403ea2be5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3652,7 +3652,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0}
+  m_AnchoredPosition: {x: 9933.393, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2311854490392662759
@@ -3896,8 +3896,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2311854491205333345}
   m_HandleRect: {fileID: 2311854491205333347}
   m_Direction: 0
-  m_Value: 0.49999994
-  m_Size: 0.23674493
+  m_Value: -79.49632
+  m_Size: 0.8255994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5317,7 +5317,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 1125
+  m_PreferredWidth: 356
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
@@ -6029,7 +6029,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 1125
+  m_PreferredWidth: 356
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
@@ -7207,7 +7207,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 1125
+  m_PreferredWidth: 356
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: 1
@@ -7599,7 +7599,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 58.5
+  m_fontSize: 47.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8115,7 +8115,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 1125
+  m_PreferredWidth: 356
   m_PreferredHeight: 607.1573
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
@@ -10561,7 +10561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4185252541783986, guid: f86e73b6642ff254cac331ce6e5bfb89, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.0870285
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4185252541783986, guid: f86e73b6642ff254cac331ce6e5bfb89, type: 3}
       propertyPath: m_LocalRotation.x

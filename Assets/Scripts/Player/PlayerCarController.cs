@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 [RequireComponent(typeof(ShiftsScript))]
+[RequireComponent(typeof(CarController))]
 public class PlayerCarController : MonoBehaviour
 {
     public float DistancTravled;
@@ -14,19 +15,30 @@ public class PlayerCarController : MonoBehaviour
     // Private variables set at the start
     private ShiftsScript shiftsScript;
     private bool IsRaceStarted;
-    private DateTime StartedTime;
+    public float Speed
+    {
+        get
+        {
+            return PCarController.KPH;
+        }
+    }
+    public float Gear
+    {
+        get
+        {
+            return PCarController.CurrentGear;
+        }
+    }
     private void Awake()
     {
-        StartedTime = DateTime.Now;
         shiftsScript = GetComponent<ShiftsScript>();
 
     }
 
     void Start()
     {
-        PCarController.GetInitialXPos(0);
+        PCarController.SetInitialXPos(0);
 
-        shiftsScript.UpdateEpicShiftValues();
         IsRaceStarted = false;
 
         LoadedLevelManager.Instance.OnRaceStarted += OnRaceStarted;
@@ -40,17 +52,18 @@ public class PlayerCarController : MonoBehaviour
 
     private void OnTooEarlyShift(ShiftState shiftState, float shiftTime)
     {
-        PCarController.ShiftDown();
+        //PCarController.ShiftDown();
     }
 
     private void OnTooLateShift(ShiftState shiftState, float shiftTime)
     {
-        PCarController.ShiftDown();
+        //PCarController.ShiftUp();
     }
 
     private void OnEpicShift(ShiftState shiftState, float shiftTime)
     {
-        PCarController.ShiftUp();
+        //PCarController.ShiftUp();
+
     }
 
     private void OnRaceEnded()
@@ -65,35 +78,46 @@ public class PlayerCarController : MonoBehaviour
     private void OnRaceStarted()
     {
         LoadedLevelManager.Instance.OnRaceStarted -= OnRaceStarted;
-        PCarController.FreePositionY();
 
         IsRaceStarted = true;
     }
 
     void Update()
     {
-
-        shiftsScript.HandleShiftSlider();
+        if (IsRaceStarted)
+        {
+            shiftsScript.HandleShiftSlider();
+        }
         DistancTravled = transform.position.z;
 
+        /* if (Input.GetMouseButtonDown(0) && IsRaceStarted)
+         {
+             AudioManager.Instance.Play("ShiftGear");
+             shiftsScript.ResetShiftSliderTime();
+             shiftsScript.HandleShiftState();
+         }*/
 
-        if (Input.GetMouseButtonDown(0) && IsRaceStarted)
-        {
-            InGameUIManagerScript.Instance.HideTurtorialUI();
-            AudioManager.Instance.Play("ShiftGear");
-            shiftsScript.ResetShiftSliderTime();
-            shiftsScript.HandleShiftState();
-            shiftsScript.UpdateEpicShiftValues();
-            var acc = shiftsScript.GetShiftTime();         
-            var gears = UpdateDiffGearing();
-            PCarController.Drive(acc, gears);
-        }
-       
     }
-
-    private float UpdateDiffGearing()
+    public void ChangeGear(bool up)
     {
-        return shiftsScript.GetShiftTime().Remap(shiftsScript.GetMinShiftTime(), shiftsScript.GetMaxShiftTime(), PCarController.diffGearingss[0], PCarController.diffGearingss[1]);
+        AudioManager.Instance.Play("ShiftGear");
+        InGameUIManagerScript.Instance.HideTurtorialUI();
+        shiftsScript.HandleShiftState();
+
+        if (up)
+        {
+            var acc = shiftsScript.GetShiftTime();
+
+            PCarController.Drive(acc);
+
+            PCarController.ShiftUp();
+        }
+        else
+        {
+            PCarController.ShiftDown();
+        }
+        shiftsScript.ResetShiftSliderTime();
+
     }
     public void ToogleHandbrake(bool val)
     {
@@ -103,8 +127,23 @@ public class PlayerCarController : MonoBehaviour
     {
         
         PCarController.SetCarToPosition(pos);
-        PCarController.FreezePositionY();
 
+    }
+    public bool CanGear()
+    {
+        return PCarController.CanGear();
+    }
+    public bool CanBoost()
+    {
+        return PCarController.CanBoost();
+    }
+    public void ActiveBoost()
+    {
+         PCarController.ActiveBoost();
+    }
+    public float GetAvailableBoost()
+    {
+        return PCarController.GetAvailableBoost();
     }
 }
 

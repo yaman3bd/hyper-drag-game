@@ -14,6 +14,18 @@ public enum TypesofCar
 [CreateAssetMenu(fileName = "NewCarData", menuName = "ScriptableObjects/Cars/Car Data")]
 public class CarDataScriptableObject : ScriptableObject
 {
+    [Header("Movement")]
+    public float MaxSpeed;
+    public float Acceleration;
+    public float NitroForc;
+    public float StartAcceleration;
+    public float Drag;
+    public int MaxGears;
+    [Header("Sounds")]
+    public AudioClip EngineSound;
+    public AudioClip NitroSound;
+    public AudioClip GearChangeSound;
+    [Header("Store")]
     public bool IsAvailable;
     public string Name;
     public string ID;

@@ -15,37 +15,30 @@ public class InGameUIManagerScript : GlobalUIScript
     public TutorialUIScript TutorialUI;
     [Header("Buttons")]
     public Button ReloadButton;
+    [Header("Nitro")]
+    public Button NitroButton;
+    public Image NitroFillImage;
+    [Header("Gears")]
+    public GameObject Pointer;
+
+
     [Header("UI")]
-    public TMP_Text TimeText;
-    public Slider ShiftSlider;
-    public Gradient2 ShiftSliderBackground;
-    public TextAnimation ShiftStateText;
+     public TextAnimation ShiftStateText;
     public CanvasGroup InGameUIElementsCanvasGroup;
 
     [Header("Texts Rects")]
     public RectTransform ShiftSliderRect;
-    public RectTransform ShiftStateTextRect;
-    public RectTransform SpeedTextRect;
-    public RectTransform TimeTextRect;
     public RectTransform ReloadButtonRect;
     [Header("Texts Targets")]
     public RectTransform ShiftSliderStartTargetRect;
-    public RectTransform ShiftStateTextStartTargetRect;
-    public RectTransform SpeedTextStartTargetRect;
-    public RectTransform TimeTextStartTargetRect;
     public RectTransform ReloadButtonStartTargetRect;
     [Space]
     public RectTransform ShiftSliderEndTargetRect;
-    public RectTransform ShiftStateTextEndTargetRect;
-    public RectTransform SpeedTextEndTargetRect;
-    public RectTransform TimeTextEndTargetRect;
     public RectTransform ReloadButtonEndTargetRect;
 
     [Header("Timers")]
     public float ShiftSliderMoveDuration;
-    public float SpeedTextMoveDuration;
-    public float ShiftStateTextMoveDuration;
-    public float InGameUIElementsCanvasGroupFadeDuration;
+     public float InGameUIElementsCanvasGroupFadeDuration;
     [Header("Progress")]
     public Slider PlayerProgress;
     public Slider AIProgress;
@@ -63,14 +56,7 @@ public class InGameUIManagerScript : GlobalUIScript
 
         ShiftSliderRect.anchoredPosition = ShiftSliderStartTargetRect.anchoredPosition;
 
-        //  ShiftStateTextRect.anchoredPosition = ShiftStateTextEndTargetRect.anchoredPosition;
-
-        SpeedTextRect.anchoredPosition = SpeedTextStartTargetRect.anchoredPosition;
-        
-        TimeTextRect.anchoredPosition = TimeTextStartTargetRect.anchoredPosition;
-
         ReloadButtonRect.anchoredPosition = ReloadButtonStartTargetRect.anchoredPosition;
-
     }
     private void StartAnimation()
     {
@@ -78,10 +64,7 @@ public class InGameUIManagerScript : GlobalUIScript
         InGameUIElementsCanvasGroup.DOFade(1, InGameUIElementsCanvasGroupFadeDuration);
 
         ShiftSliderRect.DOAnchorPos(ShiftSliderEndTargetRect.anchoredPosition, ShiftSliderMoveDuration);
-
-        SpeedTextRect.DOAnchorPos(SpeedTextEndTargetRect.anchoredPosition, SpeedTextMoveDuration);
        
-        TimeTextRect.DOAnchorPos(TimeTextEndTargetRect.anchoredPosition, SpeedTextMoveDuration);
 
         ReloadButtonRect.DOAnchorPos(ReloadButtonEndTargetRect.anchoredPosition, ShiftSliderMoveDuration);
 
@@ -93,9 +76,7 @@ public class InGameUIManagerScript : GlobalUIScript
 
         ShiftSliderRect.DOAnchorPos(ShiftSliderStartTargetRect.anchoredPosition, ShiftSliderMoveDuration);
 
-        ShiftStateTextRect.DOAnchorPos(ShiftStateTextStartTargetRect.anchoredPosition, ShiftStateTextMoveDuration);
-
-        SpeedTextRect.DOAnchorPos(SpeedTextStartTargetRect.anchoredPosition, SpeedTextMoveDuration);
+ 
 
     }
     private void Start()
@@ -104,6 +85,14 @@ public class InGameUIManagerScript : GlobalUIScript
         LoadedLevelManager.Instance.OnBeforeRaceStarted += OnBeforeRaceStarted;
       
         ReloadButton.onClick.AddListener(ReloadButton_OnClikc);
+
+
+        NitroButton.onClick.AddListener(NitroButton_OnClick);
+    }
+
+    private void NitroButton_OnClick()
+    {
+        LoadedLevelManager.Instance.Player.ActiveBoost();
     }
 
     private void ReloadButton_OnClikc()
@@ -151,9 +140,16 @@ public class InGameUIManagerScript : GlobalUIScript
         AIProgress.value = aiProgress;
 
     }
+    private bool boosted;
     private void Update()
     {
         Progress();
-        TimeText.text = "Time: " + ((int)LoadedLevelManager.Instance.PlayerRaceTime).ToString();
+        
+        if (!boosted && LoadedLevelManager.Instance.Player.CanBoost())
+        {
+            boosted = true;
+            NitroButton.gameObject.SetActive(true);
+        }
+        NitroFillImage.fillAmount = LoadedLevelManager.Instance.Player.GetAvailableBoost();
     }
 }

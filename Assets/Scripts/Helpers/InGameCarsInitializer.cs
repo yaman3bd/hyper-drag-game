@@ -29,9 +29,8 @@ public class InGameCarsInitializer : MonoBehaviour
                 carController.MaxZ = 0.25f;
                 carController.RotationSpeed = 50.0f;
 
-                carController.IsRearWheelsDriving = true;
-                carController.diffGearingss = new float[] { 2, 20 };
-                carController.BrakeForce = 30000;
+                
+                //carController.BrakeForce = 30000;
                 carController.Downforce = 10;
 
                 var CenterOfMass = new GameObject("CenterOfMass");
@@ -48,10 +47,6 @@ public class InGameCarsInitializer : MonoBehaviour
                 shiftsScript.EpicShiftThreshold = 0.1f;
                 shiftsScript.TooCloseShiftThreshold = 0.15f;
 
-                shiftsScript.ShiftSliderSpeed = 1;
-                shiftsScript.MaxTime = 0.5f;
-                shiftsScript.MinTime = 1f;
-                shiftsScript.TimeThreshold = 0.01f;
 
                 var temp = new GameObject("TempEffects");
                 temp.transform.SetParent(item.transform);

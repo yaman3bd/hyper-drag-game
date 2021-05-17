@@ -8,7 +8,7 @@ using System;
 
 public class TestCameraFollow : MonoBehaviour
 {
-	// Should the camera follow the target
+
 	[SerializeField] bool follow = false;
 	public bool Rotate;
 	public bool Rotate1;
@@ -28,11 +28,8 @@ public class TestCameraFollow : MonoBehaviour
 	[SerializeField] float lerpPositionMultiplier = 1f;
 	[Range(0, 10)]
 	[SerializeField] float lerpRotationMultiplier = 1f;
+	 
 
-	// Speedometer
-	public TMP_Text speedometer;
-
-	public TestCarMovement Car;
 	void FixedUpdate()
 	{
 	
@@ -78,11 +75,7 @@ public class TestCameraFollow : MonoBehaviour
 		//	transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
 		//}
 		// Update speedometer
- 			StringBuilder sb = new StringBuilder();
-			sb.Append(((int)(Car.Speed)).ToString());
-			sb.Append(" Kph");
-
-			//speedometer.text = sb.ToString();
+ 		
  		 
 	}
 }

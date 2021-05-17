@@ -8,38 +8,54 @@ using UnityEngine.UI.Extensions;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
+    internal enum DriveType
+    {
+        None,
+        FrontWheels,
+        RearWheels,
+        AllWheels
+    }
+    [Header("Engine")]
+    private float EngineRPM;
+    private float MaxRPM;
+    private AnimationCurve EngineTorque = new AnimationCurve(new Keyframe(4.3f, 101.0f), new Keyframe(7903.0f, 472.0f), new Keyframe(9529.0f, 259.0f));
+    [Header("Gears")]
+    private float[] GearBox;
+    private float[] GearBoxSpeedsLimits;
+    public int CurrentGear;
 
     [Header("Rotation")]
     public bool LimitRotations;
     public float MaxX, MaxZ;
-    [UnityEngine.Serialization.FormerlySerializedAs("MaxY")]
     public float RotationSpeed;
     [Header("Push Force")]
     public ForceMode ForceMode;
     public float ForcePower;
-
-    [Header("Wheels")]
-    public bool IsFrontWheelsDriving;
-    public bool IsRearWheelsDriving;
-    /*
-     *  Motor torque represent the torque sent to the wheels by the motor with x: speed in km/h and y: torque
-     *  The curve should start at x=0 and y>0 and should end with x>topspeed and y<0
-     *  The higher the torque the faster it accelerate
-     *  the longer the curve the faster it gets
-     */
-
-    public AnimationCurve MotorTorque = new AnimationCurve(new Keyframe(0, 200), new Keyframe(50, 300), new Keyframe(200, 0));
-    public float[] diffGearingss;
-
+    private bool CarInGearForce;
     [Header("Forces")]
-    public float BrakeForce;
-    [Range(0.5f, 10f)]
+    private float BrakeForce = 0;
     public float Downforce = 1.0f;
     public bool isGrounded;
+    [Header("Boost")]
+    private bool IsBoosting;
+    private bool AllowBoosting;
+
+    [SerializeField] float MaxBoostTime;
+    [SerializeField] float BoostTime;
+    [SerializeField] float BoostRegen;
+    [SerializeField] float BoostForce;
+    
+    float MaxGearForceTime;
+    float GearForceTime;
+    float GearForceRegen;
     [Header("Behavior")]
     public Transform centerOfMass;
-    public float speed = 0.0f;
-
+    public float kph;
+    public float InitialXPos;
+    [Header("Wheels")]
+    [SerializeField]
+    private DriveType WheelsDriveType;
+    private float Acceleration;
     private bool handbrake;
 
     int lastGroundCheck = 0;
@@ -63,17 +79,30 @@ public class CarController : MonoBehaviour
 
     public bool Handbrake { get { return handbrake; } set { handbrake = value; } }
 
-    public float Speed { get { return speed; } }
+    public float KPH { get { return kph; } }
+    public float Gear { get { return CurrentGear; } }
+    public bool CanGear()
+    {
+        return CurrentGear < GearBox.Length - 1;
+    }
+    public bool CanBoost()
+    {
+        return CurrentGear == GearBox.Length - 1;
+    }
+    public float GetAvailableBoost()
+    {
+        return BoostTime / MaxBoostTime;
+    }
+    public void ActiveBoost()
+    {
+        AllowBoosting = true;
+        IsBoosting = true;
+    }
 
     // Private variables set at the start
     private Rigidbody rb;
     private List<WheelCollider> wheels;
-
-    private float CurrentDiffGearing;
-    private float Acceleration;
-    private float InitialXPos;
-    private float[] GearBox;
-    private int CurrentGear;
+    private float smoothTime = 0.09f;
 
     private void Awake()
     {
@@ -87,14 +116,33 @@ public class CarController : MonoBehaviour
         {
             rb.centerOfMass = centerOfMass.localPosition;
         }
+        BoostTime = MaxBoostTime;
         LoadedLevelManager.Instance.OnRaceStarted += OnRaceStarted;
         this.ForceMode = GameManagment.GameManager.Instance.GameSettings.ForceMode;
         this.ForcePower = GameManagment.GameManager.Instance.GameSettings.ForcePower;
-        this.GearBox = GameManagment.GameManager.Instance.GameSettings.GearBox;
-        this.LimitRotations = GameManagment.GameManager.Instance.GameSettings.LimitRotation;
-        GetWheels();
-        UpdateBodyDrag(0);
+        this.MaxGearForceTime = GameManagment.GameManager.Instance.GameSettings.MaxGearForceTime;
+        this.GearForceTime = GameManagment.GameManager.Instance.GameSettings.GearForceTime;
+       this.GearForceRegen = GameManagment.GameManager.Instance.GameSettings.GearForceRegen;
+        this.Downforce = GameManagment.GameManager.Instance.GameSettings.DownForce;
 
+        this.MaxX = GameManagment.GameManager.Instance.GameSettings.MaxX;
+
+        this.MaxRPM = GameManagment.GameManager.Instance.GameSettings.MaxRPM;
+
+        this.GearBox = GameManagment.GameManager.Instance.GameSettings.GearBox;
+        this.GearBoxSpeedsLimits = GameManagment.GameManager.Instance.GameSettings.GearBoxSpeedLimits;
+
+        this.LimitRotations = GameManagment.GameManager.Instance.GameSettings.LimitRotation;
+
+        this.MaxBoostTime = GameManagment.GameManager.Instance.GameSettings.MaxBoostTime;
+        this.BoostTime = GameManagment.GameManager.Instance.GameSettings.BoostTime;
+        this.BoostRegen = GameManagment.GameManager.Instance.GameSettings.BoostRegen;
+        this.BoostForce = GameManagment.GameManager.Instance.GameSettings.BoostForce;
+
+        this.smoothTime = GameManagment.GameManager.Instance.GameSettings.smoothTime;
+
+
+        GetWheels();
 
     }
 
@@ -109,14 +157,6 @@ public class CarController : MonoBehaviour
         {
             CurrentGear++;
         }
-
-        UpdateBodyDrag(CurrentGear);
-
-    }
-
-    private void UpdateBodyDrag(int CurrentGear)
-    {
-        rb.drag = GearBox[CurrentGear];
     }
     public void ShiftDown()
     {
@@ -124,8 +164,6 @@ public class CarController : MonoBehaviour
         {
             CurrentGear--;
         }
-        UpdateBodyDrag(CurrentGear);
-
     }
     private void LimitRotation()
     {
@@ -137,10 +175,8 @@ public class CarController : MonoBehaviour
         rot.x = Mathf.Clamp(rot.x, -MaxX, MaxX);
         rot.z = Mathf.Clamp(rot.z, -MaxZ, MaxZ);
 
-        if (Math.Abs(transform.rotation.x) > Math.Abs(rot.x) || Math.Abs(transform.rotation.z) > Math.Abs(rot.z))
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, rot, RotationSpeed * Time.deltaTime);
-        }
+        var a = new Quaternion(0, transform.rotation.y, 0, 1);
+        transform.rotation = Quaternion.Slerp(transform.rotation, a, 0.01f);
 
     }
     void Update()
@@ -151,34 +187,43 @@ public class CarController : MonoBehaviour
 
         FreezeTransformPosAndRot(InitialXPos, 0);
 
+        if (!IsBoosting)
+        {
+            BoostTime += Time.deltaTime * BoostRegen;
+            if (BoostTime > MaxBoostTime)
+            {
+                BoostTime = MaxBoostTime;
+            }
+        }
+        if (!CarInGearForce)
+        {
+
+            GearForceTime += Time.deltaTime * GearForceRegen;
+            if (GearForceTime > MaxGearForceTime)
+            {
+                GearForceTime = MaxGearForceTime;
+            }
+        }
     }
-    public void Drive(float acceleration, float currentDiffGearing)
+    public void Drive(float acceleration)
     {
 
         UpdateAcceleration(acceleration);
-        UpdateCurrentDiffGearing(currentDiffGearing);
         AddForceIfBetween(0.5f, 1.0f);
 
     }
-    public void GetInitialXPos(float val)
+    
+    public void SetInitialXPos(float val)
     {
         InitialXPos = val;
     }
     public void UpdateAcceleration(float val)
     {
-        Acceleration = val;
-    }
-    public void UpdateCurrentDiffGearing(float val)
-    {
-        CurrentDiffGearing = val;
+        Acceleration = Math.Abs(val);
     }
 
     void FixedUpdate()
     {
-
-        // Mesure current speed
-        //speed = transform.InverseTransformDirection(rb.velocity).z * 3.6f;
-        speed = rb.velocity.magnitude * 2.7f;
         if (handbrake)
         {
             foreach (WheelCollider wheel in wheels)
@@ -190,32 +235,102 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            foreach (WheelCollider wheel in wheels)
+
+
+            for (int i = 0; i < wheels.Count; i++)
             {
-                wheel.motorTorque = GetWheelMotorTorque();
-                wheel.brakeTorque = 0;
+                wheels[i].motorTorque = GetWheelsTorque() / 4;
+                wheels[i].brakeTorque = BrakeForce;
             }
 
-            if (Acceleration.IsBetween(0.0f, 0.3f))
-            {
 
-                foreach (WheelCollider wheel in wheels)
+
+            if (AllowBoosting && IsBoosting && BoostTime > 0.0f)
+            {
+                rb.AddForce(transform.forward * BoostForce);
+
+                BoostTime -= Time.fixedDeltaTime;
+                if (BoostTime <= 0f)
                 {
-                    // Don't zero out this value or the wheel completely lock up
-                    wheel.motorTorque = 0.01f;
-                    wheel.brakeTorque = GetBrakeForce();
+                    AllowBoosting = false;
+                    BoostTime = 0f;
+                    IsBoosting = false;
                 }
             }
 
+            if (CarInGearForce && GearForceTime > 0.0f)
+            {
+                GearForceTime -= Time.fixedDeltaTime;
+                
+                if (GearForceTime <= 0f)
+                {
+                    GearForceTime = 0f;
+                    CarInGearForce = false;
+                }
+            }
 
-            // Down-force
-            rb.AddForce(-transform.up * speed * Downforce);
+            kph = rb.velocity.magnitude * 3.6f;
+
+            if (!CarInGearForce && !IsBoosting)
+            {
+                AutomaticSpeedLimiter();
+            }
+         
+            AddDownForce();
+
         }
     }
 
+    private float GetWheelsTorque()
+    {
+        float wheelsRPM = GetWheelsRPM();
+
+        return GetTotalPower(wheelsRPM);
+    }
+
+    private float GetTotalPower(float wheelsRPM)
+    {
+        float totalPower = 0;
+        totalPower = 3.6f * EngineTorque .Evaluate(EngineRPM) * 1;
+        float velocity = 0;
+        EngineRPM = Mathf.SmoothDamp(EngineRPM, 1000 + (Mathf.Abs(wheelsRPM) * 3.6f * (GearBox[CurrentGear])), ref velocity, 0.01f * Time.deltaTime);
+        //this max it at max
+        if (EngineRPM >= MaxRPM + 1000) EngineRPM = MaxRPM + 1000; // clamp at max
+
+        return totalPower;
+    }
+    private float GetWheelsRPM()
+    {
+        float rmp;
+        float sum = 0;
+        int R = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            sum += wheels[i].rpm;
+            R++;
+        }
+        rmp = (R != 0) ? sum / R : 0;
+        return rmp;
+    }
+
+    private void AutomaticSpeedLimiter()
+    {
+        Vector3 velocity = Vector3.zero;
+        if (kph > GearBoxSpeedsLimits[CurrentGear])
+        {
+            rb.velocity = Vector3.SmoothDamp(rb.velocity,
+                rb.velocity.normalized * (GearBoxSpeedsLimits[CurrentGear] / 3.6f), ref velocity, smoothTime * Time.deltaTime);
+        }
+    }
+    private void AddDownForce()
+    {
+
+        rb.AddForce(-transform.up * Downforce * rb.velocity.magnitude);
+
+    }
     public void ToogleHandbrake(bool h)
     {
-        rb.drag = 2;
+        rb.drag = 3;
         handbrake = h;
     }
     #region Physics
@@ -223,20 +338,9 @@ public class CarController : MonoBehaviour
     {
         if (Acceleration.IsBetween(a, b))
         {
-            rb.AddForce(transform.position + Vector3.forward * ForcePower * GetWheelMotorTorque(), ForceMode);
-        }
-    }
+            CarInGearForce = true;
 
-    public void Stop()
-    {
-        rb.velocity = rb.velocity;
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ
-            | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-
-        foreach (WheelCollider wheel in wheels)
-        {
-            wheel.motorTorque = Mathf.Epsilon;
-            wheel.brakeTorque = BrakeForce * BrakeForce * BrakeForce;
+            rb.AddForce(transform.position + Vector3.forward * ForcePower * GetWheelsTorque(), ForceMode);
         }
     }
     public void SetCarToPosition(Vector3 pos)
@@ -244,14 +348,7 @@ public class CarController : MonoBehaviour
         rb.isKinematic = true;
         transform.position = pos;
     }
-    public void FreezePositionY()
-    {
-   //  rb.constraints = RigidbodyConstraints.FreezeRotation;
-    }
-    public void FreePositionY()
-    {
-        rb.constraints = RigidbodyConstraints.None;
-    }
+
 
     #endregion
 
@@ -292,6 +389,7 @@ public class CarController : MonoBehaviour
 
         }
         rb.mass = GameManagment.GameManager.Instance.GameSettings.BodyMass;
+        rb.angularDrag = GameManagment.GameManager.Instance.GameSettings.AngularDrag;
 
     }
 
@@ -300,29 +398,6 @@ public class CarController : MonoBehaviour
         var newForce = BrakeForce * Acceleration;
         newForce -= BrakeForce;
         return Mathf.Abs(newForce);
-    }
-
-    private float GetWheelMotorTorque()
-    {
-        return (MotorTorque.Evaluate(speed) * Acceleration * GetDiffGearings());
-    }
-
-    #endregion
-
-    #region Gearings
-
-    private float GetDiffGearings()
-    {
-
-        int driveWheels = 2;
-
-        if (IsFrontWheelsDriving && IsRearWheelsDriving)
-        {
-            driveWheels = 4;
-        }
-
-        return CurrentDiffGearing / driveWheels;
-
     }
 
     #endregion

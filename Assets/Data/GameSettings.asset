@@ -18,8 +18,38 @@ MonoBehaviour:
   Spring: 25000
   Damper: 900
   TargetPosition: 0.25
-  BodyMass: 500
+  BodyMass: 750
+  AngularDrag: 1
   ForceMode: 1
-  ForcePower: 0.4
+  ForcePower: 1
+  DownForce: 200
+  MaxX: 0.4
   GearBox:
-  - 0
+  - 2
+  - 1.7
+  - 1.3
+  - 0.9
+  - 0.4
+  GearBoxSpeedLimits:
+  - 60
+  - 100
+  - 130
+  - 170
+  - 200
+  MaxRPM: 8000
+  MaxGearForceTime: 10
+  GearForceTime: 0
+  GearForceRegen: 1
+  MaxBoostTime: 1
+  BoostTime: 1
+  BoostRegen: 0.25
+  BoostForce: 7500
+  smoothTime: 0.01
+  RotationSpeed: 0
+  ForwardSpeed: 1
+  BackwardSpeed: 5
+  RotationLimit: 0.65
+  EpicShiftThreshold: -0.65
+  TooCloseShiftThreshold: -0.4
+  TooEarlyShiftThreshold: 0
+  SlowRatio: 0.25
