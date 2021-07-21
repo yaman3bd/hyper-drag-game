@@ -35,11 +35,11 @@ public class GearsUI : MonoBehaviour
     public TMPro.TMP_Text GearsText;
     public void updateNeedle()
     {
-        GearsText.text = (test.gearNum + 1).ToString();
+        //GearsText.text = (test.gearNum + 1).ToString();
         SpeedText.text = ((int)test.KPH).ToString();
         float totalAngle = startPosiziton - endPosition;
-        float speednr = test.KPH / test.gearChangeSpeed[5];
-        float rot = startPosiziton - speednr * totalAngle;
+       // float speednr = test.KPH / test.gearChangeSpeed[5];
+        float rot = startPosiziton - 0 * totalAngle;
        // Pointer.transform.eulerAngles = new Vector3(0, 0, Mathf.Lerp(startPosiziton, endPosition, test.KPH / test.gearChangeSpeed[5]));
         Pointer.transform.eulerAngles = new Vector3(0, 0, rot);
 

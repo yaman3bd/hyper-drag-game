@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1151347081017796418
 Transform:
@@ -125,6 +125,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1151347081017796418}
     m_Modifications:
+    - target: {fileID: 2047720465882274655, guid: 7df1fb9d1787c8f42913e2273aff0cb2,
+        type: 3}
+      propertyPath: m_CookingOptions
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6166205938719417126, guid: 7df1fb9d1787c8f42913e2273aff0cb2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -210,6 +215,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1151347081017796418}
     m_Modifications:
+    - target: {fileID: 2047720465882274655, guid: 7df1fb9d1787c8f42913e2273aff0cb2,
+        type: 3}
+      propertyPath: m_CookingOptions
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6166205938719417126, guid: 7df1fb9d1787c8f42913e2273aff0cb2,
         type: 3}
       propertyPath: m_LocalPosition.x

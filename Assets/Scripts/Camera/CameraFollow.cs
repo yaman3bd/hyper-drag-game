@@ -52,7 +52,7 @@ public class CameraFollow : MonoBehaviour
 	{
 		LoadedLevelManager.Instance.OnRaceEnded -= OnRaceStarted;
 		
-		offset = new Vector3(8.41f, 8.0f, -11);
+		offset = new Vector3(5.46f, 8.0f, -13.17f);
 		offse1t = new Vector3(1, -3f, 0);
 
 		DOTween.To(() => lerpPositionMultiplier, x => lerpPositionMultiplierNew = x, 10, 1f);
@@ -64,7 +64,7 @@ public class CameraFollow : MonoBehaviour
 		if (raceStart)
 		{
 
-			offset = new Vector3(8.41f, 8.0f, -11);
+			offset = new Vector3(5.46f, 8.0f, -13.17f);
 			offse1t = new Vector3(1, -3f, 0);
 			DOTween.To(() => lerpPositionMultiplier, x => lerpPositionMultiplierNew = x, 10, 0.5f);
 			DOTween.To(() => lerpRotationMultiplier, x => lerpRotationMultiplier = x, 10, 0.5f);
